@@ -8,7 +8,9 @@ To get the latest version of khcoder, or learn more about it, you are kindly inv
 - http://khcoder.net/en/
 - https://github.com/ko-ichi-h/khcoder
 
-This repository contains modifications to the original code of this very old version of khcoder that is still used by our research team.
+------------------
+
+Our forked repository contains modifications to the original code of this very old version of khcoder that is still used by our research team.
 
 We kindly want to thanks the original collaborators and community behind khcoder and engage in promoting the open source ecosystem that surrounds it. Our use of this code remains strictly for academic and research purposes. 
 
