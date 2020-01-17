@@ -11,7 +11,12 @@ We kindly want to thanks the original collaborators and community behind khcoder
 
 We may have to distribute this version of khcoder to third-party researchers and if so the modified source code will be distributed in whole and without restrictions, with a copy of the GPLv2 license and with visible references to the upstream repository and website.
 
+------------------
+
 In concordance with GPLv2:
+
 Simon R.-Girard, and al. hereby disclaims all copyright interest in the program
+
 khcoder written by Mr. Koichi Higuchi.
-Simon R.-Girard, and al., 17 January 2020
+
+Simon R.-Girard, and al., 17 January 2020`
