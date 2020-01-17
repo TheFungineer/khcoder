@@ -1,4 +1,4 @@
-# Legacy khcoder Pathsets
+# Legacy khcoder + Custom Patches
 (Legacy) KH Coder: for Quantitative Content Analysis or Text Mining (Legacy) - Fork from 3.Alpha.10b
 
 Note that this version of khcoder predates the addition of a README and LICENSE files upstream. To the best of our intentions the license was cherrypicked from upstream and the following README was added.
