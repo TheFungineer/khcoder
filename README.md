@@ -1,5 +1,6 @@
 # Legacy khcoder Pathsets
 KH Coder: for Quantitative Content Analysis or Text Mining (Legacy) - Fork from 3.Alpha.10b
+
 To get the latest version of kh-coder, with all bugfixes and latest features, you are kindly invited to go here: 
 https://github.com/ko-ichi-h/khcoder
 
