@@ -2,8 +2,9 @@
 (Legacy) KH Coder: for Quantitative Content Analysis or Text Mining (Legacy) - Fork from 3.Alpha.10b
 
 To get the latest version of khcoder, or learn more about it, you are kindly invited to navigate to the upstream resources: 
-http://khcoder.net/en/
-https://github.com/ko-ichi-h/khcoder
+
+- http://khcoder.net/en/
+- https://github.com/ko-ichi-h/khcoder
 
 This repository contains modifications to the original code of this very old version of khcoder that is still used by our research team.
 
