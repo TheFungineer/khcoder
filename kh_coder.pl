@@ -130,7 +130,7 @@ use kh_morpho;
 use gui_window;
 
 # Say hello
-print "khcoder version $kh_version, Copyright (C) 2001-2020 Koichi Higuchi\nkhcoder comes with ABSOLUTELY NO WARRANTY.\nThis is free software, and you are welcome to redistribute it\nunder certain conditions."
+print "\nkhcoder version $kh_version, Copyright (C) 2001-2020 Koichi Higuchi\nkhcoder comes with ABSOLUTELY NO WARRANTY.\nThis is free software, and you are welcome to redistribute it\nunder certain conditions.\n";
 print "This is KH Coder $kh_version on $^O.\n";
 print "CWD: ", $config_obj->cwd, "\n";
 
