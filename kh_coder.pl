@@ -2,15 +2,15 @@
 
 =head1 COPYRIGHT
 
-Copyright (C) 2001-2013 ╚ї╕¤╣╠░ь <http://koichi.nihon.to/psnl>
+Copyright (C) 2001-2013 я┐╜я┐╜я┐╜я┐╜я┐╜╠░я┐╜ <http://koichi.nihon.to/psnl>
 
-╦▄е╫еэе░ещерд╧е╒еъб╝бже╜е╒е╚ежезевд╟д╣бг
+я┐╜▄е╫ея┐╜я┐╜я┐╜я┐╜я┐╜я┐╜╧е╒еъб╝я┐╜я┐╜я┐╜я┐╜я┐╜╒е╚ея┐╜я┐╜я┐╜я┐╜я┐╜я┐╜╟дя┐╜я┐╜я┐╜
 
-двд╩д┐д╧бвFree Software Foundation дм╕°╔╜д╖д┐GNU░ь╚╠╕°═н╗╚═╤╡Ў┬·╜ёб╩The GNU General Public Licenseб╦д╬б╓е╨б╝е╕ечеє2б╫░┐ддд╧д╜дь░╩╣▀д╬│╞е╨б╝е╕ечеєд╬├цдлдщддд║дьдлдЄ┴к┬Єд╖бвд╜д╬е╨б╝е╕ечеєдм─ъдсды╛Є╣рд╦╜╛д├д╞╦▄е╫еэе░ещердЄ╗╚═╤бв║╞╚╥╔█бвд▐д┐д╧╩╤╣╣д╣дыд│д╚дмд╟днд▐д╣бг
+я┐╜я┐╜я┐╜╩дя┐╜я┐╜╧бя┐╜Free Software Foundation я┐╜я┐╜я┐╜я┐╜╔╜я┐╜я┐╜я┐╜я┐╜GNUя┐╜я┐╜я┐╜╠╕я┐╜═ня┐╜я┐╜я┐╜╤╡я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜The GNU General Public Licenseя┐╜╦д╬б╓е╨бя┐╜я┐╜я┐╜я┐╜я┐╜я┐╜2я┐╜╫░я┐╜я┐╜я┐╜я┐╜╧дя┐╜я┐╜я┐╜╩╣▀д╬│╞е╨бя┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜цдля┐╜щддя┐╜я┐╜я┐╜ьдля┐╜я┐╜я┐╜я┐╜я┐╜Єд╖бя┐╜я┐╜я┐╜я┐╜╬е╨бя┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜╦╜я┐╜я┐╜├дя┐╜я┐╜▄е╫ея┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜╤бя┐╜я┐╜я┐╜я┐╜я┐╜я┐╜█бя┐╜я┐╜▐дя┐╜я┐╜я┐╜я┐╜╤╣я┐╜я┐╜я┐╜я┐╜ыд│я┐╜╚дя┐╜я┐╜╟дя┐╜я┐╜▐дя┐╜я┐╜я┐╜
 
-╦▄е╫еэе░ещерд╧═н═╤д╚д╧╗╫ддд▐д╣дмбв╚╥╔█д╦┼Ўд┐д├д╞д╧бв╗╘╛ь└н╡┌д╙╞├─ъ╠▄┼к┼м╣ч└нд╦д─ддд╞д╬░┼╠█д╬╩▌╛┌дЄ┤▐дсд╞бвдддлд╩ды╩▌╛┌дт╣╘ддд▐д╗дєбг
+я┐╜▄е╫ея┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜═ня┐╜╤д╚д╧╗╫дя┐╜я┐╜▐дя┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜█дя┐╜я┐╜я┐╜я┐╜я┐╜я┐╜├д╞д╧бя┐╜я┐╜╘╛я┐╜я┐╜я┐╜я┐╜┌дя┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜┼к┼мя┐╜я┐╜я┐╜я┐╜я┐╜╦д─дя┐╜я┐╜╞д╬░я┐╜я┐╜█дя┐╜я┐╜▌╛┌дя┐╜▐дя┐╜╞бя┐╜я┐╜я┐╜я┐╜я┐╜я┐╜╩дя┐╜я┐╜▌╛┌дя┐╜╘дя┐╜я┐╜▐дя┐╜я┐╜я┐╜
 
-╛▄║┘д╦д─ддд╞д╧GNU░ь╚╠╕°═н╗╚═╤╡Ў┬·╜ёдЄдк╞╔д▀▓╝д╡ддбгGNU░ь╚╠╕°═н╗╚═╤╡Ў┬·╜ёд╧╦▄е╫еэе░ещерд╬е▐е╦ехевеыд╬╦Ў╚°д╦┼║╔╒д╡дьд╞ддд▐д╣бгдвдыддд╧<http://www.gnu.org/licenses/>д╟дтбвGNU░ь╚╠╕°═н╗╚═╤╡Ў┬·╜ёдЄ▒▄═ўд╣дыд│д╚дмд╟днд▐д╣бг
+я┐╜▄║┘д╦д─дя┐╜я┐╜╞дя┐╜GNUя┐╜я┐╜я┐╜╠╕я┐╜═ня┐╜я┐╜я┐╜╤╡я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜╔д▀▓я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜GNUя┐╜я┐╜я┐╜╠╕я┐╜═ня┐╜я┐╜я┐╜╤╡я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜▄е╫ея┐╜я┐╜я┐╜я┐╜я┐╜я┐╜╬е▐е╦ехевя┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜┼║я┐╜╒дя┐╜я┐╜я┐╜╞дя┐╜я┐╜▐дя┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ыддя┐╜я┐╜<http://www.gnu.org/licenses/>я┐╜╟дтбвGNUя┐╜я┐╜я┐╜╠╕я┐╜═ня┐╜я┐╜я┐╜╤╡я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ыд│я┐╜╚дя┐╜я┐╜╟дя┐╜я┐╜▐дя┐╜я┐╜я┐╜
 
 =cut
 
@@ -23,7 +23,7 @@ use vars qw($config_obj $project_obj $main_gui $splash $kh_version);
 $kh_version = "3.Alpha.10b";
 
 BEGIN {
-	# е╟е╨е├е░═╤б─
+	# я┐╜╟е╨е├ея┐╜я┐╜╤бя┐╜
 	#open (STDERR,">stderr.txt") or die;
 
 	use Jcode;
@@ -47,7 +47,7 @@ BEGIN {
 	# for Windows [1]
 	use Cwd;
 	if ($^O eq 'MSWin32'){
-		# Cwd.pmд╬╛х╜ёдн
+		# Cwd.pmя┐╜╬╛я┐╜я┐╜
 		no warnings 'redefine';
 		sub Cwd::_win32_cwd {
 			if (defined &DynaLoader::boot_DynaLoader) {
@@ -65,12 +65,12 @@ BEGIN {
 		use warnings 'redefine';
 	}
 
-	# ете╕ехб╝еыд╬е╤е╣дЄ─╔▓├
+	# я┐╜те╕я┐╜хб╝я┐╜я┐╜╬е╤ея┐╜я┐╜я┐╜я┐╜╔▓я┐╜
 	unshift @INC, cwd.'/kh_lib';
 
 	# for Windows [2]
 	if ($^O eq 'MSWin32'){
-		# е│еєе╜б╝еыдЄ║╟╛о▓╜
+		# я┐╜я┐╜я┐╜єе╜бя┐╜я┐╜я┐╜я┐╜╟╛я┐╜я┐╜я┐╜
 		require Win32::Console;
 		Win32::Console->new->Title('Console of KH Coder');
 		Win32::Sleep(50);
@@ -82,7 +82,7 @@ BEGIN {
 			$ShowWindow->Call( $hw, 7 );
 		}
 		$SIG{TERM} = $SIG{QUIT} = sub{ exit; };
-		# е╣е╫еще├е╖ех
+		# я┐╜я┐╜я┐╜╫ея┐╜├ея┐╜я┐╜я┐╜
 		#require Tk::Splash;
 		#$splash = Tk::Splash->Show(
 		#	Tk->findINC('kh_logo.bmp'),
@@ -90,15 +90,15 @@ BEGIN {
 		#	109,
 		#	'',
 		#);
-		# TkдЄInvokeд╖д╩дде▐еые┴е╣еье├е╔═╤д╬е╣е╫еще├е╖ех
+		# Tkя┐╜я┐╜Invokeя┐╜я┐╜я┐╜╩дя┐╜я┐╜▐ея┐╜я┐╜я┐╜я┐╜я┐╜я┐╜├ея┐╜я┐╜╤д╬ея┐╜я┐╜╫ея┐╜├ея┐╜я┐╜я┐╜
 		if (eval 'require Win32::GUI::SplashScreen'){
-			require Tk::Splash; # findINC┤╪┐ЇдЄ╞└дыд┐дс
+			require Tk::Splash; # findINCя┐╜╪┐я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ыд┐я┐╜я┐╜
 			Win32::GUI::SplashScreen::Show(
 				-file => Tk->findINC('kh_logo.bmp'),
 				-mintime => 3,
 			);
 		}
-		# └▀─ъ
+		# я┐╜я┐╜я┐╜я┐╜
 		require Tk::Clipboard;
 		require Tk::Clipboard_kh;
 	} 
@@ -115,7 +115,7 @@ BEGIN {
 		}
 	}
 
-	# └▀─ъд╬╞╔д▀╣■д▀
+	# я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜╔д▀╣я┐╜я┐╜я┐╜
 	require kh_sysconfig;
 	$config_obj = kh_sysconfig->readin('./config/coder.ini',&cwd);
 }
@@ -130,10 +130,11 @@ use kh_morpho;
 use gui_window;
 
 # Say hello
+print "khcoder version $kh_version, Copyright (C) 2001-2020 Koichi Higuchi\nkhcoder comes with ABSOLUTELY NO WARRANTY.\nThis is free software, and you are welcome to redistribute it\nunder certain conditions."
 print "This is KH Coder $kh_version on $^O.\n";
 print "CWD: ", $config_obj->cwd, "\n";
 
-# Windows╚╟е╤е├е▒б╝е╕═╤д╬╜щ┤№▓╜
+# Windowsя┐╜╟е╤е├ея┐╜я┐╜я┐╜я┐╜я┐╜я┐╜╤д╬╜я┐╜я┐╜я┐╜я┐╜
 if (
 	   ($::config_obj->os eq 'win32')
 	&& $::config_obj->all_in_one_pack
@@ -142,7 +143,7 @@ if (
 	kh_all_in_one->init;
 }
 
-# Mac OS X╚╟е╤е├е▒б╝е╕═╤д╬╜щ┤№▓╜
+# Mac OS Xя┐╜╟е╤е├ея┐╜я┐╜я┐╜я┐╜я┐╜я┐╜╤д╬╜я┐╜я┐╜я┐╜я┐╜
 if (
 	   ($^O eq 'darwin')
 	&& $::config_obj->all_in_one_pack
@@ -151,7 +152,7 @@ if (
 	kh_all_in_mac->init;
 }
 
-# Rд╬╜щ┤№▓╜
+# Rя┐╜╬╜я┐╜я┐╜я┐╜я┐╜
 use Statistics::R;
 
 no  warnings 'redefine';
@@ -192,17 +193,17 @@ if ($::config_obj->{R}){
 chdir ($::config_obj->{cwd});
 $::config_obj->R_version;
 
-# е▐еые┴е╣еье├е╔╜ш═¤д╬╜р╚ў
+# я┐╜▐ея┐╜я┐╜я┐╜я┐╜я┐╜я┐╜├е╔╜я┐╜я┐╜я┐╜я┐╜╬╜я┐╜я┐╜я┐╜
 use my_threads;
 my_threads->init;
 
-# GUIд╬│л╗╧
+# GUIя┐╜╬│я┐╜я┐╜я┐╜
 $main_gui = gui_window::main->open;
 MainLoop;
 
 __END__
 
-# е╞е╣е╚═╤е╫еэе╕езепе╚дЄ│лдп
+# я┐╜╞ея┐╜я┐╜я┐╜я┐╜╤е╫ея┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜╚дЄ│лдя┐╜
 kh_project->temp(
 	target  =>
 		'F:/home/Koichi/Study/perl/test_data/STATS_News-IT-2004/2004p.txt',
@@ -215,11 +216,11 @@ $::main_gui->close_all;
 $::main_gui->menu->refresh;
 $::main_gui->inner->refresh;
 
-# ╢ж╡пе═е├е╚еяб╝еп║ю└о
+# я┐╜я┐╜я┐╜я┐╜я┐╜═е├е╚еяб╝я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜
 my $win_net = gui_window::word_netgraph->open;
 $win_net->calc;
 
-# ╢ж╡пе═е├е╚еяб╝епд╬б╓─┤└░б╫дЄ╖лдъ╩╓д╣
+# я┐╜я┐╜я┐╜я┐╜я┐╜═е├е╚еяб╝я┐╜я┐╜я┐╜╬бя┐╜─┤я┐╜я┐╜я┐╜╫дЄ╖лдя┐╜я┐╜╓дя┐╜
 my $n = 0;
 while (1){
 	my $c = $::main_gui->get('w_word_netgraph_plot');
