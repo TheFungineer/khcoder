@@ -1021,7 +1021,7 @@ ver_freq <- sqrt( ver_freq / pi )
 # But then, when we want to standardize the size of the bubbles that represents the distribution of frequencies, does the amount 
 # of words analyzed is related to your degree-of-freedom? If so we need to be careful in how we substitute the frequencies of 
 # ignored words which then act as missing data resulting in bias in the distribution of frequencies. If the list of ignored words 
-# is fixed and won't change in your whole experimentation then you probably don't care, but you tell me...
+# is fixed and wont change in your whole experimentation then you probably dont care, but you tell me...
 #
 # if ( std_radius == 1 ){ 
 # 	if ( sd(ver_freq, na.rm = TRUE) == 0 ){
