@@ -20,8 +20,8 @@ We may have to distribute this version of KH Coder to third-party researchers. I
 
 In accordance with the GPLv2:
 
-David-O. Mercier (mail@mindforms.net) and Simon R.-Girard (simon.r.girard@pm.me) hereby disclaim all copyright interest in the program.
+David-O. Mercier (dmerc091@uottawa.ca) and Simon R.-Girard hereby disclaim all copyright interest in the program.
 
 KH Coder originally written by Prof. Koichi Higuchi from the Ritsumeikan University in Kyoto.
 
-– David-O. Mercier and Simon R.-Girard, 17 January 2020`
+– David-O. Mercier and Simon R.-Girard, 17 January 2020
