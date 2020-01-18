@@ -179,7 +179,7 @@ if ($::config_obj->{R}){
 	$::config_obj->{R}->startR;
 
 	if ($::config_obj->os ne 'win32'){
-		$::config_obj->{R}->send('Sys.setlocale(category="LC_ALL",locale="ja_JP.UTF-8")');
+		$::config_obj->{R}->send('Sys.setlocale(category="LC_ALL",locale="en_CA.UTF-8")');
 	}
 
 	$::config_obj->{R}->send('dummy_d <- matrix(1:9, nrow=3, ncol=3)');
