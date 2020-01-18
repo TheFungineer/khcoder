@@ -1,0 +1,66 @@
+chasenrc_path	
+grammarcha_path	
+mecab_unicode	
+mecabrc_path	
+stanf_jar_path	<insert_path_to_tagger_jar_exe>
+stanf_tagger_path_en	<insert_path_to_tagger_file>
+stanf_tagger_path_cn	
+stanf_seg_path	
+han_dic_path	
+freeling_dir	
+freeling_lang	en
+stanford_lang	en
+stemming_lang	en
+last_lang	en
+last_method	stanford
+c_or_j	stanford
+msg_lang	en
+msg_lang_set	0
+r_path	
+r_plot_debug	1
+sqllog	
+sql_username	<insert_sql_user_here>
+sql_password	<insert_sql_password_here_oh_yes_you_do>
+sql_host	localhost
+sql_port	
+multi_threads	1
+mail_if	
+mail_smtp	
+mail_from	
+mail_to	
+use_heap	1
+all_in_one_pack	
+font_main	kochi gothic,10
+font_plot	IPAPGothic
+font_plot_cn	Droid Sans Fallback
+font_plot_kr	UnDotum
+font_plot_ru	Droid Sans
+font_pdf	Japan1GothicBBB
+font_pdf_cn	GB1
+font_pdf_kr	Korea1deb
+kaigyo_kigou	（↓）
+color_DocView_info	#008000,white,0
+color_DocView_search	black,yellow,0
+color_DocView_force	black,cyan,0
+color_DocView_html	red,white,0
+color_DocView_CodeW	blue,white,1
+color_ListHL_fore	black
+color_ListHL_back	#AFEEEE
+plot_size_words	640
+plot_size_codes	480
+plot_font_size	100
+DocView_WrapLength_on_Win9x	80
+DocSrch_CutLength	85
+app_html	firefox '%s' &
+app_csv	soffice --calc %s &
+app_pdf	xpdf %s &
+w_new_pro	552x373+1642+839
+w_word_mds	649x431+1594+810
+w_cod_netg_plot	1305x647+950+1216
+w_cod_netg	656x521+1590+765
+w_open_pro	365x221+1736+915
+w_dictionary	622x426+1607+812
+w_sysconfig	1443x419+1629+811
+w_about	404x274+1716+888
+w_cod_som	679x161+1728+975
+main_window	918x354+1391+458

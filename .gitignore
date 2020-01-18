@@ -1,3 +1,5 @@
-config/
+config/*
+!config/msg.*
+!config/coder.ini.template
 .R*
 Rplots*
