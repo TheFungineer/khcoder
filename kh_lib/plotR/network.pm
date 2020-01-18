@@ -1001,6 +1001,13 @@ neg_to_zero <- function(nums){
   return(temp)
 }
 
+# Frequencies Set for Legend
+legend_freq <- NULL
+
+for (i in 1:length(ver_freq)){
+	legend_freq <- c( legend_freq, ver_freq[i] )
+}
+
 # Save un-standardized data
 b_freq <- ver_freq
 
@@ -1290,19 +1297,34 @@ p <- p + geom_nodes(                       # Dummy for the legend
 	shape = 21
 )
 
-b_size <- ver_freq
+b_size <- legend_freq
+
+# Adjust bubble radius so that appearance number ratio = area ratio
+b_size <- sqrt( b_size / pi )
+
+# Standardize (emphasize) bubble size
+if (std_radius){ 
+	if ( sd(b_size) == 0 ){
+		b_size <- rep(10, length(b_size))
+	} else {
+		b_size <- b_size / sd(b_size)
+		b_size <- b_size - mean(b_size)
+		b_size <- b_size * 5 * bubble_var / 100 + 10
+		b_size <- neg_to_zero(b_size)
+	}
+}
 
 lerp_freq <- function(x) {
-    round(min(b_freq)*(1-((x-min(b_size))/(max(b_size)-min(b_size)))) + max(b_freq)*((x-min(b_size))/(max(b_size)-min(b_size))))
+    round(min(legend_freq)*(1-((x-min(b_size))/(max(b_size)-min(b_size)))) + max(legend_freq)*((x-min(b_size))/(max(b_size)-min(b_size))))
 }
 
 nearest_power_of_ten <- floor(log10( (lerp_freq(max(b_size)) - lerp_freq(min(b_size))) / 3 ))
 
-if ( use_freq_as_size == 1 ){
+# if ( use_freq_as_size == 1 ){
 	p <- p + scale_size_area(
 		"Frequency",
 		max_size = 30 * bubble_size / 100,
-		breaks = c(min(b_size), ((round(((max(b_freq)-min(b_freq)) / 3) + min(b_freq), -1 * nearest_power_of_ten)-min(b_freq)) / (max(b_freq) - min(b_freq))) * (max(b_size)-min(b_size)) + min(b_size), ((round((2*(max(b_freq)-min(b_freq)) / 3) + min(b_freq), -1 * nearest_power_of_ten)-min(b_freq)) / (max(b_freq) - min(b_freq))) * (max(b_size)-min(b_size)) + min(b_size), max(b_size)),
+		breaks = c(min(b_size), ((round(((max(legend_freq)-min(legend_freq)) / 3) + min(legend_freq), -1 * nearest_power_of_ten)-min(legend_freq)) / (max(legend_freq) - min(legend_freq))) * (max(b_size)-min(b_size)) + min(b_size), ((round((2*(max(legend_freq)-min(legend_freq)) / 3) + min(legend_freq), -1 * nearest_power_of_ten)-min(legend_freq)) / (max(legend_freq) - min(legend_freq))) * (max(b_size)-min(b_size)) + min(b_size), max(b_size)),
 		labels = lerp_freq,
 		guide = guide_legend(
 			title = "Frequency:",
@@ -1311,12 +1333,12 @@ if ( use_freq_as_size == 1 ){
 			order = 3
 		)
 	)
-} else {
-	p <- p + scale_size_area(
-		max_size = vv,
-		guide = F
-	)
-}
+# } else {
+# 	p <- p + scale_size_area(
+# 		max_size = vv,
+# 		guide = F
+# 	)
+# }
 
 # Variables
 
@@ -1784,8 +1806,7 @@ sub r_command_wordlayout{
 
 # Fix for "wordlayout" function
 filename <- tempfile()
-writeLines("wordlayout <- function (x, y, words, cex = 1, rotate90 = FALSE, xlim = c(-Inf, 
-	Inf), ylim = c(-Inf, Inf), tstep = 0.1, rstep = 0.1, ...) 
+writeLines("wordlayout <- function (x, y, words, cex = 1, rotate90 = FALSE, xlim = c(-Inf, Inf), ylim = c(-Inf, Inf), tstep = 0.1, rstep = 0.1, ...) 
 {
 	tails <- \"g|j|p|q|y\"
 	n <- length(words)
