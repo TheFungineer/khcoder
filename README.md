@@ -1,7 +1,7 @@
 # Legacy KH Coder + Custom Patches
-(Legacy) KH Coder: for Quantitative Content Analysis or Text Mining (Legacy) - Fork from 3.Alpha.10b
+KH Coder: for Quantitative Content Analysis or Text Mining — Fork from 3.Alpha.10b
 
-Note that this version of KH Coder predates the addition of a README and LICENSE files upstream. With the best of intentions, the license was cherry-picked from upstream and the following README was added.
+Note that this legacy version of KH Coder predates the addition of a README and LICENSE files upstream. With the best of intentions, the license was cherry-picked from upstream and the following README was added.
 
 To get the latest version of KH Coder, or learn more about it, you are invited to navigate to the upstream resources: 
 
