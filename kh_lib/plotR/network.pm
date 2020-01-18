@@ -1004,27 +1004,39 @@ neg_to_zero <- function(nums){
 # Frequencies Set for Legend
 legend_freq <- NULL
 
-for (i in 1:length(ver_freq)){
-	legend_freq <- c( legend_freq, ver_freq[i] )
+for (i in 1:length(igraph::get.vertex.attribute(n2,"name"))){
+	if ( !is.na(ver_freq[i]) && !is.null(ver_freq[i]) && !is.nan(ver_freq[i]) ){
+		legend_freq <- c( legend_freq, ver_freq[i] )
+	}
 }
-
-# Save un-standardized data
-b_freq <- ver_freq
 
 # Adjust bubble radius so that appearance number ratio = area ratio
 ver_freq <- sqrt( ver_freq / pi )
 
+#
 # Standardize (emphasize) bubble size
-if ( std_radius == 1 ){ 
-	if ( sd(ver_freq) == 0 ){
-		ver_freq <- rep(10, length(ver_freq))
-	} else {
-		ver_freq <- ver_freq / sd(ver_freq)
-		ver_freq <- ver_freq - mean(ver_freq)
-		ver_freq <- (ver_freq * 5 * bubble_var / 100 + 10) * (bubble_size / 100)
-		ver_freq <- neg_to_zero(ver_freq)
-	}
-}
+#
+# TODO: 
+# So essentially, NAs are set to the frequency of words that were marked as ignored in order to make them invisible in the graph. 
+# But then, when we want to standardize the size of the bubbles that represents the distribution of frequencies, does the amount 
+# of words analyzed is related to your degree-of-freedom? If so we need to be careful in how we substitute the frequencies of 
+# ignored words which then act as missing data resulting in bias in the distribution of frequencies. If the list of ignored words 
+# is fixed and won't change in your whole experimentation then you probably don't care, but you tell me...
+#
+# if ( std_radius == 1 ){ 
+# 	if ( sd(ver_freq, na.rm = TRUE) == 0 ){
+# 		ver_freq <- rep(10, length(ver_freq))
+# 		if ( is.null(target_ids) == FALSE ){
+# 			ver_freq[target_ids] <- NA
+# 		}
+# 	} else {
+# 		ver_freq <- ver_freq / sd(ver_freq, na.rm = TRUE)
+# 		ver_freq <- ver_freq - mean(ver_freq, na.rm = TRUE)
+# 		ver_freq <- (ver_freq * 5 * bubble_var / 100 + 10) * (bubble_size / 100)
+# 		ver_freq <- neg_to_zero(ver_freq)
+# 	}
+# }
+#
 
 n2 <- igraph::set.vertex.attribute(
 	n2,
@@ -1297,34 +1309,19 @@ p <- p + geom_nodes(                       # Dummy for the legend
 	shape = 21
 )
 
-b_size <- legend_freq
-
-# Adjust bubble radius so that appearance number ratio = area ratio
-b_size <- sqrt( b_size / pi )
-
-# Standardize (emphasize) bubble size
-if (std_radius){ 
-	if ( sd(b_size) == 0 ){
-		b_size <- rep(10, length(b_size))
-	} else {
-		b_size <- b_size / sd(b_size)
-		b_size <- b_size - mean(b_size)
-		b_size <- b_size * 5 * bubble_var / 100 + 10
-		b_size <- neg_to_zero(b_size)
-	}
-}
-
 lerp_freq <- function(x) {
-    round(min(legend_freq)*(1-((x-min(b_size))/(max(b_size)-min(b_size)))) + max(legend_freq)*((x-min(b_size))/(max(b_size)-min(b_size))))
+	round(min(legend_freq)*(1-((x-min(x))/(max(x)-min(x)))) + max(legend_freq)*((x-min(x))/(max(x)-min(x))))
 }
 
-nearest_power_of_ten <- floor(log10( (lerp_freq(max(b_size)) - lerp_freq(min(b_size))) / 3 ))
+breaks_with_NAs <- function(extremums) {
+	c(min(extremums), ((round(((max(legend_freq)-min(legend_freq)) / 3) + min(legend_freq), 0)-min(legend_freq)) / (max(legend_freq) - min(legend_freq))) * (max(extremums)-min(extremums)) + min(extremums), ((round((2*(max(legend_freq)-min(legend_freq)) / 3) + min(legend_freq), 0)-min(legend_freq)) / (max(legend_freq) - min(legend_freq))) * (max(extremums)-min(extremums)) + min(extremums), max(extremums))
+}
 
-# if ( use_freq_as_size == 1 ){
+if ( use_freq_as_size == 1 ){
 	p <- p + scale_size_area(
 		"Frequency",
 		max_size = 30 * bubble_size / 100,
-		breaks = c(min(b_size), ((round(((max(legend_freq)-min(legend_freq)) / 3) + min(legend_freq), -1 * nearest_power_of_ten)-min(legend_freq)) / (max(legend_freq) - min(legend_freq))) * (max(b_size)-min(b_size)) + min(b_size), ((round((2*(max(legend_freq)-min(legend_freq)) / 3) + min(legend_freq), -1 * nearest_power_of_ten)-min(legend_freq)) / (max(legend_freq) - min(legend_freq))) * (max(b_size)-min(b_size)) + min(b_size), max(b_size)),
+		breaks = breaks_with_NAs,
 		labels = lerp_freq,
 		guide = guide_legend(
 			title = "Frequency:",
@@ -1333,12 +1330,12 @@ nearest_power_of_ten <- floor(log10( (lerp_freq(max(b_size)) - lerp_freq(min(b_s
 			order = 3
 		)
 	)
-# } else {
-# 	p <- p + scale_size_area(
-# 		max_size = vv,
-# 		guide = F
-# 	)
-# }
+} else {
+	p <- p + scale_size_area(
+		max_size = vv,
+		guide = F
+	)
+}
 
 # Variables
 
