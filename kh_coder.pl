@@ -130,8 +130,8 @@ use kh_morpho;
 use gui_window;
 
 # Say hello
-print "\nkhcoder version $kh_version, Copyright (C) 2001-2020 Koichi Higuchi\nkhcoder comes with ABSOLUTELY NO WARRANTY.\nThis is free software, and you are welcome to redistribute it\nunder certain conditions. All details here:\nhttps://www.gnu.org/licenses/old-licenses/gpl-2.0.txt\n\n";
-print "This is KH Coder $kh_version on $^O.\n";
+print "\nKH Coder version $kh_version, Copyright (C) 2001-2020 Koichi Higuchi\nFork with minor changes by David-O. Mercier and Simon R.-Girard\n\nKH Coder comes with ABSOLUTELY NO WARRANTY.\nThis is free software, and you are welcome to redistribute it\nunder certain conditions. All details here:\nhttps://www.gnu.org/licenses/old-licenses/gpl-2.0.txt\n\n";
+print "This is KH Coder $kh_version running on $^O.\n";
 print "CWD: ", $config_obj->cwd, "\n";
 
 # Windows�ǥѥå������Ѥν����
