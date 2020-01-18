@@ -12,7 +12,7 @@ To get the latest version of KH Coder, or learn more about it, you are invited t
 
 Our forked repository contains modifications to the original code of this old version of KH Coder that is still used by our research team.
 
-We kindly want to thanks the original collaborators and community behind KH Coder and engage in promoting the open source ecosystem that surrounds it. Our use of this code remains strictly for academic and research purposes. 
+We kindly want to thank the original collaborators and community behind KH Coder and engage in promoting the open source ecosystem that surrounds it. Our use of this code remains strictly for academic and research purposes. 
 
 We may have to distribute this version of KH Coder to third-party researchers. If so, the modified source code will be distributed in whole and without restrictions, with a copy of the GPLv2 license and with visible references to the upstream repository and website.
 
