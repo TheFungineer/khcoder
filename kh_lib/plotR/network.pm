@@ -865,7 +865,7 @@ if ( length(igraph::get.vertex.attribute(n2,"name")) > 1 ){
 			if_fixed <- 1
 		}
 	}
-
+	
 #-----------------------------------------------------------------------------#
 #                       Prepare for Plotting with ggplot2                     #
 
@@ -1011,6 +1011,7 @@ for (i in 1:length(igraph::get.vertex.attribute(n2,"name"))){
 }
 
 # Adjust bubble radius so that appearance number ratio = area ratio
+legend_freq <- sqrt( legend_freq / pi)
 ver_freq <- sqrt( ver_freq / pi )
 
 #
@@ -1309,19 +1310,31 @@ p <- p + geom_nodes(                       # Dummy for the legend
 	shape = 21
 )
 
-lerp_freq <- function(x) {
-	round(min(legend_freq)*(1-((x-min(x))/(max(x)-min(x)))) + max(legend_freq)*((x-min(x))/(max(x)-min(x))))
+lerp <- function(x, a, b) {
+	a * (1 - x) + b * x
 }
 
-breaks_with_NAs <- function(extremums) {
-	c(min(extremums), ((round(((max(legend_freq)-min(legend_freq)) / 3) + min(legend_freq), 0)-min(legend_freq)) / (max(legend_freq) - min(legend_freq))) * (max(extremums)-min(extremums)) + min(extremums), ((round((2*(max(legend_freq)-min(legend_freq)) / 3) + min(legend_freq), 0)-min(legend_freq)) / (max(legend_freq) - min(legend_freq))) * (max(extremums)-min(extremums)) + min(extremums), max(extremums))
+nrst_pow10 <- function(x) {
+	floor(log10(x))
+}
+
+lerp_freq <- function(brks) {
+	brks * brks * pi
+}
+
+interp_breaks <- function(ignored_has_na) {
+	extrem_f = c(min(legend_freq), max(legend_freq)) * c(min(legend_freq), max(legend_freq)) * pi
+	sqrt( c(lerp(0/3, min(extrem_f), max(extrem_f)),
+			round(lerp(1/3, min(extrem_f), max(extrem_f)), -1 * nrst_pow10(lerp(1/3, min(extrem_f), max(extrem_f)))),
+			round(lerp(2/3, min(extrem_f), max(extrem_f)), -1 * nrst_pow10(lerp(2/3, min(extrem_f), max(extrem_f)))),
+			lerp(3/3, min(extrem_f), max(extrem_f))) / pi)
 }
 
 if ( use_freq_as_size == 1 ){
 	p <- p + scale_size_area(
 		"Frequency",
 		max_size = 30 * bubble_size / 100,
-		breaks = breaks_with_NAs,
+		breaks = interp_breaks,
 		labels = lerp_freq,
 		guide = guide_legend(
 			title = "Frequency:",

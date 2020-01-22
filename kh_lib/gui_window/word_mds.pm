@@ -770,15 +770,30 @@ if ( bubble == 1 ){
 		alpha=alpha_value
 	)
 	
-	lerp_freq <- function(x) {
-		round(min(b_freq)*(1-((x-min(b_size))/(max(b_size)-min(b_size)))) + max(b_freq)*((x-min(b_size))/(max(b_size)-min(b_size))))
+
+	lerp <- function(x, a, b) {
+		a * (1 - x) + b * x
 	}
-	
-	nearest_power_of_ten <- floor(log10((lerp_freq(max(b_size)) - lerp_freq(min(b_size))) / 3))
-	
+
+	nrst_pow10 <- function(x) {
+		floor(log10(x))
+	}
+
+	lerp_freq <- function(brks) {
+		brks * brks * pi
+	}
+
+	interp_breaks <- function(extrem) {
+		extrem_f = extrem * extrem * pi
+		sqrt( c(lerp(0/3, min(extrem_f), max(extrem_f)),
+				round(lerp(1/3, min(extrem_f), max(extrem_f)), -1 * nrst_pow10(lerp(1/3, min(extrem_f), max(extrem_f)))),
+				round(lerp(2/3, min(extrem_f), max(extrem_f)), -1 * nrst_pow10(lerp(2/3, min(extrem_f), max(extrem_f)))),
+				lerp(3/3, min(extrem_f), max(extrem_f))) / pi)
+	}
+
 	g <- g + scale_size_area(
 		max_size = 30 * bubble_size / 100,
-		breaks = c(min(b_size), ((round(((max(b_freq)-min(b_freq)) / 3) + min(b_freq), -1 * nearest_power_of_ten)-min(b_freq)) / (max(b_freq) - min(b_freq))) * (max(b_size)-min(b_size)) + min(b_size), ((round((2*(max(b_freq)-min(b_freq)) / 3) + min(b_freq), -1 * nearest_power_of_ten)-min(b_freq)) / (max(b_freq) - min(b_freq))) * (max(b_size)-min(b_size)) + min(b_size), max(b_size)),
+		breaks = interp_breaks,
 		labels = lerp_freq,
 		guide = guide_legend(
 			title = "Frequency:",
