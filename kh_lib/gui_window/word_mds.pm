@@ -253,12 +253,14 @@ sub make_plot{
 
 	$r_command .= "
 	if (exists(\"doc_length_mtr\")){
-		leng <- as.numeric(doc_length_mtr[,2])
-		leng[leng ==0] <- 1
-		d <- t(d)
-		d <- d / leng
-		d <- d * 1000
-		d <- t(d)
+		# NOTE: Not sure what this was supposed to do, but it breaks everything.
+		#
+		# leng <- as.numeric(doc_length_mtr[,2])
+		# leng[leng ==0] <- 1
+		# d <- t(d)
+		# d <- d / leng
+		# d <- d * 1000
+		# d <- t(d)
 	}
 	" unless $args{method_dist} eq 'binary';
 
