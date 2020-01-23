@@ -1080,7 +1080,7 @@ sub R_device{
 #
 #
 #
-#	$dpi = int( $dpi * $self->{font_size} );
+	$dpi = int( $dpi * $self->{font_size} );
 
 
 
@@ -1521,7 +1521,7 @@ sub _save_png{
 #
 #
 #
-#	$dpi = int( $dpi * $self->{font_size} );
+	$dpi = int( $dpi * $self->{font_size} );
 
 	$self->{dpi} = $dpi;
 
