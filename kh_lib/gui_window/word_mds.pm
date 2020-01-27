@@ -786,11 +786,14 @@ if ( bubble == 1 ){
 	}
 
 	interp_breaks <- function(extrem) {
-		extrem_f = extrem * extrem * pi
-		sqrt( c(lerp(0/3, min(extrem_f), max(extrem_f)),
-				round(lerp(1/3, min(extrem_f), max(extrem_f)), -1 * nrst_pow10(lerp(1/3, min(extrem_f), max(extrem_f)))),
-				round(lerp(2/3, min(extrem_f), max(extrem_f)), -1 * nrst_pow10(lerp(2/3, min(extrem_f), max(extrem_f)))),
-				lerp(3/3, min(extrem_f), max(extrem_f))) / pi)
+		temp <- c(  lerp(0/3, min(extrem), max(extrem)),
+					lerp(1/3, min(extrem), max(extrem)),
+					lerp(2/3, min(extrem), max(extrem)),
+					lerp(3/3, min(extrem), max(extrem)) )
+		temp <- temp * temp * pi
+		temp <- temp - (c(0, 1, 1, 0) * temp) %% 10^nrst_pow10(temp)
+		temp <- sqrt(temp / pi)
+		return(temp)
 	}
 
 	g <- g + scale_size_area(
