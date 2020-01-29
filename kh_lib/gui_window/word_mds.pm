@@ -605,20 +605,28 @@ for (i in rownames(cl)){
 	}
 }
 
-# Adjust bubble radius so that appearance number ratio = area ratio
-b_size <- sqrt( b_size / pi )
-
-# Standardize (emphasize) bubble size
-if (std_radius){ 
-	if ( sd(b_size) == 0 ){
-		b_size <- rep(10, length(b_size))
-	} else {
-		b_size <- b_size / sd(b_size)
-		b_size <- b_size - mean(b_size)
-		b_size <- b_size * 5 * bubble_var / 100 + 10
-		b_size <- neg_to_zero(b_size)
-	}
+# Feature Scaling on request
+if (std_radius){
+	b_size <- log10(b_size)
+	b_size <- (b_size - min(b_size)) * (log10(30) - log10(pi * bubble_var / 100)) / (max(b_size) - min(b_size))
+	b_size <- b_size + (log10(pi * bubble_var / 100))
+	b_size <- 10^b_size
 }
+
+# Adjust bubble radius so that appearance number ratio = area ratio
+# b_size <- sqrt( b_size / pi )
+# 
+# # Standardize (emphasize) bubble size
+# if (std_radius){ 
+# 	if ( sd(b_size) == 0 ){
+# 		b_size <- rep(10, length(b_size))
+# 	} else {
+# 		b_size <- b_size / sd(b_size)
+# 		b_size <- b_size - mean(b_size)
+# 		b_size <- b_size * 5 * bubble_var / 100 + 10
+# 		b_size <- neg_to_zero(b_size)
+# 	}
+# }
 
 # Cluster analysis
 if (n_cls > 0){
@@ -782,17 +790,31 @@ if ( bubble == 1 ){
 	}
 
 	lerp_freq <- function(brks) {
-		brks * brks * pi
+		if (std_radius){
+			temp <- log10(brks)
+			temp <- temp - (log10(pi * bubble_var / 100))
+			temp <- temp / (log10(30) - log10(pi * bubble_var / 100))
+			temp <- lerp(temp, min(log10(b_freq)), max(log10(b_freq)))
+			temp <- 10^temp
+			temp <- round(temp, 1)
+			return(temp)
+		}
+		return(brks)
 	}
 
 	interp_breaks <- function(extrem) {
-		temp <- c(  lerp(0/3, min(extrem), max(extrem)),
-					lerp(1/3, min(extrem), max(extrem)),
-					lerp(2/3, min(extrem), max(extrem)),
-					lerp(3/3, min(extrem), max(extrem)) )
-		temp <- temp * temp * pi
-		temp <- temp - (c(0, 1, 1, 0) * temp) %% 10^nrst_pow10(temp)
-		temp <- sqrt(temp / pi)
+		temp <- c(  lerp(0/3, min(log10(b_freq)), max(log10(b_freq))),
+					lerp(1/3, min(log10(b_freq)), max(log10(b_freq))),
+					lerp(2/3, min(log10(b_freq)), max(log10(b_freq))),
+					lerp(3/3, min(log10(b_freq)), max(log10(b_freq))) )
+		temp <- 10^temp
+		temp <- round(temp, -1 * c(-1, 1, 1, -1) * nrst_pow10(temp))
+		if (std_radius){
+			temp <- log10(temp)
+			temp <- (temp - min(log10(b_freq))) * (log10(30) - log10(pi * bubble_var / 100)) / (max(log10(b_freq)) - min(log10(b_freq)))
+			temp <- temp + (log10(pi * bubble_var / 100))
+			temp <- 10^temp
+		}
 		return(temp)
 	}
 
