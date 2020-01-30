@@ -576,14 +576,18 @@ if ( exists("bs_fixed") == F ) {
 }
 
 # Determine the size of the bubbles
+daome.log8 <- function(num) {
+	log(num)/log(8)
+}
+
 neg_to_zero <- function(nums){
   temp <- NULL
   for (i in 1:length(nums) ){
     if ( is.na( nums[i] ) ){
-      temp[i] <- log10(pi)
+      temp[i] <- 1
     } else {
-	    if (nums[i] < log10(pi)){
-	      temp[i] <- log10(pi)
+	    if (nums[i] < 1){
+	      temp[i] <- 1
 	    } else {
 	      temp[i] <-  nums[i]
 	    }
@@ -594,6 +598,7 @@ neg_to_zero <- function(nums){
 
 b_size <- NULL
 b_freq <- NULL
+b_dist <- NULL
 
 for (i in rownames(cl)){
 	if ( is.na(i) || is.null(i) || is.nan(i) ){
@@ -605,27 +610,21 @@ for (i in rownames(cl)){
 	}
 }
 
-# Adjust bubble radius so that appearance number ratio = area ratio
-# b_size <- sqrt( b_size / pi )
-
 # Standardize (emphasize) bubble size
 std_score_norm <- function(to_scale, o_data) {
-	temp <- log10(to_scale)
-	log_data <- log10(o_data)
+	temp <- daome.log8(to_scale)
+	log_data <- daome.log8(o_data)
 	if ( sd(log_data) == 0 ){
  		temp <- rep(10, length(temp))
  	} else {
  		temp <- (temp - mean(log_data)) / sd(log_data)
  		temp <- temp * 5 * bubble_var / 100 + 10
- 		temp <- neg_to_zero(temp)
  	}
-	temp <- log10(pi) + (log10(30) - log10(pi)) * (temp - min(temp))/(max(temp)-min(temp))
-	temp <- 10^temp
 	return(temp)
 }
-
 if (std_radius){ 
-	b_size <- std_score_norm(b_size, b_size)
+	b_dist <- std_score_norm(b_size, b_freq)
+	b_size <- neg_to_zero(b_dist)
 }
 
 # Cluster analysis
@@ -790,28 +789,22 @@ if ( bubble == 1 ){
 
 	lerp_freq <- function(brks) {
 		if (std_radius){
-			temp <- c(  lerp(0/3, min(log10(b_freq)), max(log10(b_freq))),
-						lerp(1/3, min(log10(b_freq)), max(log10(b_freq))),
-						lerp(2/3, min(log10(b_freq)), max(log10(b_freq))),
-						lerp(3/3, min(log10(b_freq)), max(log10(b_freq))) )
-			temp <- 10^temp
-			temp <- round(temp, -1 * c(-1, 1, 1, -1) * nrst_pow10(temp))
+			temp <- (brks - min(b_dist))/(max(b_dist) - min(b_dist))
+			temp <- lerp(temp, min(daome.log8(b_freq)), max(daome.log8(b_freq)))
+			temp <- round(8^temp, 0)
 			return(temp)
 		}
 		return(brks)
 	}
 
 	interp_breaks <- function(extrem) {
-		temp <- c(  lerp(0/3, min(log10(b_freq)), max(log10(b_freq))),
-					lerp(1/3, min(log10(b_freq)), max(log10(b_freq))),
-					lerp(2/3, min(log10(b_freq)), max(log10(b_freq))),
-					lerp(3/3, min(log10(b_freq)), max(log10(b_freq))) )
-		temp <- 10^temp
-		temp <- round(temp, -1 * c(-1, 1, 1, -1) * nrst_pow10(temp))
-		if (std_radius){
-			temp <- std_score_norm(temp, b_freq)
-		} 
-		return(temp)
+		mean_lerp_alpha <- (mean(b_dist) - min(b_dist))/(max(b_dist) - min(b_dist))
+		mean_log_freq <- lerp(mean_lerp_alpha, min(daome.log8(b_freq)), max(daome.log8(b_freq)))
+		mean_log_freq <- daome.log8(round(8^mean_log_freq, -1 * nrst_pow10(8^mean_log_freq)))
+		mean_lerp_alpha <- (mean_log_freq - min(daome.log8(b_freq)))/(max(daome.log8(b_freq)) - min(daome.log8(b_freq)))
+		c(  min(extrem),
+			lerp(mean_lerp_alpha, min(b_dist), max(b_dist)),
+			max(extrem) ) 
 	}
 
 	g <- g + scale_size_area(
