@@ -580,10 +580,10 @@ neg_to_zero <- function(nums){
   temp <- NULL
   for (i in 1:length(nums) ){
     if ( is.na( nums[i] ) ){
-      temp[i] <- 1
+      temp[i] <- log10(pi)
     } else {
-	    if (nums[i] < 1){
-	      temp[i] <- 1
+	    if (nums[i] < log10(pi)){
+	      temp[i] <- log10(pi)
 	    } else {
 	      temp[i] <-  nums[i]
 	    }
@@ -605,28 +605,28 @@ for (i in rownames(cl)){
 	}
 }
 
-# Feature Scaling on request
-if (std_radius){
-	b_size <- log10(b_size)
-	b_size <- (b_size - min(b_size)) * (log10(30) - log10(pi * bubble_var / 100)) / (max(b_size) - min(b_size))
-	b_size <- b_size + (log10(pi * bubble_var / 100))
-	b_size <- 10^b_size
-}
-
 # Adjust bubble radius so that appearance number ratio = area ratio
 # b_size <- sqrt( b_size / pi )
-# 
-# # Standardize (emphasize) bubble size
-# if (std_radius){ 
-# 	if ( sd(b_size) == 0 ){
-# 		b_size <- rep(10, length(b_size))
-# 	} else {
-# 		b_size <- b_size / sd(b_size)
-# 		b_size <- b_size - mean(b_size)
-# 		b_size <- b_size * 5 * bubble_var / 100 + 10
-# 		b_size <- neg_to_zero(b_size)
-# 	}
-# }
+
+# Standardize (emphasize) bubble size
+std_score_norm <- function(to_scale, o_data) {
+	temp <- log10(to_scale)
+	log_data <- log10(o_data)
+	if ( sd(log_data) == 0 ){
+ 		temp <- rep(10, length(temp))
+ 	} else {
+ 		temp <- (temp - mean(log_data)) / sd(log_data)
+ 		temp <- temp * 5 * bubble_var / 100 + 10
+ 		temp <- neg_to_zero(temp)
+ 	}
+	temp <- log10(pi) + (log10(30) - log10(pi)) * (temp - min(temp))/(max(temp)-min(temp))
+	temp <- 10^temp
+	return(temp)
+}
+
+if (std_radius){ 
+	b_size <- std_score_norm(b_size, b_size)
+}
 
 # Cluster analysis
 if (n_cls > 0){
@@ -779,24 +779,23 @@ if ( bubble == 1 ){
 		colour="gray40",
 		alpha=alpha_value
 	)
-	
 
 	lerp <- function(x, a, b) {
-		a * (1 - x) + b * x
-	}
-
+	a * (1 - x) + b * x
+}
+	
 	nrst_pow10 <- function(x) {
 		floor(log10(x))
 	}
 
 	lerp_freq <- function(brks) {
 		if (std_radius){
-			temp <- log10(brks)
-			temp <- temp - (log10(pi * bubble_var / 100))
-			temp <- temp / (log10(30) - log10(pi * bubble_var / 100))
-			temp <- lerp(temp, min(log10(b_freq)), max(log10(b_freq)))
+			temp <- c(  lerp(0/3, min(log10(b_freq)), max(log10(b_freq))),
+						lerp(1/3, min(log10(b_freq)), max(log10(b_freq))),
+						lerp(2/3, min(log10(b_freq)), max(log10(b_freq))),
+						lerp(3/3, min(log10(b_freq)), max(log10(b_freq))) )
 			temp <- 10^temp
-			temp <- round(temp, 1)
+			temp <- round(temp, -1 * c(-1, 1, 1, -1) * nrst_pow10(temp))
 			return(temp)
 		}
 		return(brks)
@@ -810,11 +809,8 @@ if ( bubble == 1 ){
 		temp <- 10^temp
 		temp <- round(temp, -1 * c(-1, 1, 1, -1) * nrst_pow10(temp))
 		if (std_radius){
-			temp <- log10(temp)
-			temp <- (temp - min(log10(b_freq))) * (log10(30) - log10(pi * bubble_var / 100)) / (max(log10(b_freq)) - min(log10(b_freq)))
-			temp <- temp + (log10(pi * bubble_var / 100))
-			temp <- 10^temp
-		}
+			temp <- std_score_norm(temp, b_freq)
+		} 
 		return(temp)
 	}
 
