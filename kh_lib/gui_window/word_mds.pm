@@ -798,13 +798,20 @@ if ( bubble == 1 ){
 	}
 
 	interp_breaks <- function(extrem) {
-		mean_lerp_alpha <- (mean(b_dist) - min(b_dist))/(max(b_dist) - min(b_dist))
-		mean_log_freq <- lerp(mean_lerp_alpha, min(daome.log8(b_freq)), max(daome.log8(b_freq)))
-		mean_log_freq <- daome.log8(round(8^mean_log_freq, -1 * nrst_pow10(8^mean_log_freq)))
-		mean_lerp_alpha <- (mean_log_freq - min(daome.log8(b_freq)))/(max(daome.log8(b_freq)) - min(daome.log8(b_freq)))
-		c(  min(extrem),
-			lerp(mean_lerp_alpha, min(b_dist), max(b_dist)),
-			max(extrem) ) 
+		if (std_radius){
+			mean_lerp_alpha <- (mean(b_dist) - min(b_dist))/(max(b_dist) - min(b_dist))
+			mean_log_freq <- lerp(mean_lerp_alpha, min(daome.log8(b_freq)), max(daome.log8(b_freq)))
+			mean_log_freq <- daome.log8(round(8^mean_log_freq, -1 * nrst_pow10(8^mean_log_freq)))
+			mean_lerp_alpha <- (mean_log_freq - min(daome.log8(b_freq)))/(max(daome.log8(b_freq)) - min(daome.log8(b_freq)))
+			return(c(  	min(extrem),
+						lerp(mean_lerp_alpha, min(b_dist), max(b_dist)),
+						max(extrem) ))
+		}
+		mid_freq <- 8^lerp(1/2, min(daome.log8(b_freq)), max(daome.log8(b_freq)))
+		mid_freq <- round(mid_freq, -1 * nrst_pow10(mid_freq))
+		return(c(  	min(extrem),
+					mid_freq,
+					max(extrem) ))
 	}
 
 	g <- g + scale_size_area(
