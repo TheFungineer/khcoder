@@ -614,10 +614,11 @@ for (i in rownames(cl)){
 	}
 }
 
+b_dist <- sqrt(b_freq / pi)
+
 # Standardize (emphasize) bubble size
 if (std_radius){ 
-	b_dist <- sqrt(b_freq / pi)
-	b_dist <- daome.logn(b_dist)
+	#b_dist <- daome.logn(b_dist)
 	if ( sd(b_dist) == 0 ){
  		b_dist <- rep(10, length(b_dist))
  	} else {
