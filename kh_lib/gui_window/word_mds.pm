@@ -606,8 +606,8 @@ b_dist <- NULL
 
 for (i in rownames(cl)){
 	if ( is.na(i) || is.null(i) || is.nan(i) ){
-		b_size <- c( b_size, pi )
-		b_freq <- c( b_freq, pi )
+		b_size <- c( b_size, 1 )
+		b_freq <- c( b_freq, 1 )
 	} else {
 		b_size <- c( b_size, sum( d[i,] ) )
 		b_freq <- c( b_freq, sum( d[i,] ) )
