@@ -576,10 +576,10 @@ if ( exists("bs_fixed") == F ) {
 }
 
 # Determine the size of the bubbles
-daome.log8 <- function(num) {
-	log(num)/log(8)
+daome.log_base <- 8
+daome.logn <- function(num) {
+	log(num)/log(daome.log_base)
 }
-
 neg_to_zero <- function(nums){
   temp <- NULL
   for (i in 1:length(nums) ){
@@ -596,14 +596,18 @@ neg_to_zero <- function(nums){
   return(temp)
 }
 
+lerp <- function(x, a, b) {
+	a * (1 - x) + b * x
+}
+
 b_size <- NULL
 b_freq <- NULL
 b_dist <- NULL
 
 for (i in rownames(cl)){
 	if ( is.na(i) || is.null(i) || is.nan(i) ){
-		b_size <- c( b_size, 1 )
-		b_freq <- c( b_freq, 1 )
+		b_size <- c( b_size, pi )
+		b_freq <- c( b_freq, pi )
 	} else {
 		b_size <- c( b_size, sum( d[i,] ) )
 		b_freq <- c( b_freq, sum( d[i,] ) )
@@ -611,21 +615,19 @@ for (i in rownames(cl)){
 }
 
 # Standardize (emphasize) bubble size
-std_score_norm <- function(to_scale, o_data) {
-	temp <- daome.log8(to_scale)
-	log_data <- daome.log8(o_data)
-	if ( sd(log_data) == 0 ){
- 		temp <- rep(10, length(temp))
- 	} else {
- 		temp <- (temp - mean(log_data)) / sd(log_data)
- 		temp <- temp * 5 * bubble_var / 100 + 10
- 	}
-	return(temp)
-}
 if (std_radius){ 
-	b_dist <- std_score_norm(b_size, b_freq)
+	b_dist <- sqrt(b_freq / pi)
+	b_dist <- daome.logn(b_dist)
+	if ( sd(b_dist) == 0 ){
+ 		b_dist <- rep(10, length(b_dist))
+ 	} else {
+ 		b_dist <- (b_dist - mean(b_dist)) / sd(b_dist)
+ 		b_dist <- b_dist * 5 * bubble_var / 100 + 10
+ 	}
 	b_size <- neg_to_zero(b_dist)
 }
+# else 
+# 	let ggplot manage everything
 
 # Cluster analysis
 if (n_cls > 0){
@@ -778,10 +780,6 @@ if ( bubble == 1 ){
 		colour="gray40",
 		alpha=alpha_value
 	)
-
-	lerp <- function(x, a, b) {
-	a * (1 - x) + b * x
-}
 	
 	nrst_pow10 <- function(x) {
 		floor(log10(x))
@@ -790,8 +788,8 @@ if ( bubble == 1 ){
 	lerp_freq <- function(brks) {
 		if (std_radius){
 			temp <- (brks - min(b_dist))/(max(b_dist) - min(b_dist))
-			temp <- lerp(temp, min(daome.log8(b_freq)), max(daome.log8(b_freq)))
-			temp <- round(8^temp, 0)
+			temp <- lerp(temp, min(daome.logn(b_freq)), max(daome.logn(b_freq)))
+			temp <- round(daome.log_base^temp, 0)
 			return(temp)
 		}
 		return(brks)
@@ -800,20 +798,19 @@ if ( bubble == 1 ){
 	interp_breaks <- function(extrem) {
 		if (std_radius){
 			mean_lerp_alpha <- (mean(b_dist) - min(b_dist))/(max(b_dist) - min(b_dist))
-			mean_log_freq <- lerp(mean_lerp_alpha, min(daome.log8(b_freq)), max(daome.log8(b_freq)))
-			mean_log_freq <- daome.log8(round(8^mean_log_freq, -1 * nrst_pow10(8^mean_log_freq)))
-			mean_lerp_alpha <- (mean_log_freq - min(daome.log8(b_freq)))/(max(daome.log8(b_freq)) - min(daome.log8(b_freq)))
+			mean_log_freq <- lerp(mean_lerp_alpha, min(daome.logn(b_freq)), max(daome.logn(b_freq)))
+			mean_log_freq <- daome.logn(round(daome.log_base^mean_log_freq, -1 * nrst_pow10(daome.log_base^mean_log_freq)))
+			mean_lerp_alpha <- (mean_log_freq - min(daome.logn(b_freq)))/(max(daome.logn(b_freq)) - min(daome.logn(b_freq)))
 			return(c(  	min(extrem),
 						lerp(mean_lerp_alpha, min(b_dist), max(b_dist)),
 						max(extrem) ))
 		}
-		mid_freq <- 8^lerp(1/2, min(daome.log8(b_freq)), max(daome.log8(b_freq)))
+		mid_freq <- daome.log_base^lerp(1/2, min(daome.logn(b_freq)), max(daome.logn(b_freq)))
 		mid_freq <- round(mid_freq, -1 * nrst_pow10(mid_freq))
 		return(c(  	min(extrem),
 					mid_freq,
 					max(extrem) ))
 	}
-
 	g <- g + scale_size_area(
 		max_size = 30 * bubble_size / 100,
 		breaks = interp_breaks,
@@ -824,7 +821,7 @@ if ( bubble == 1 ){
 			label.hjust = 1,
 			order = 2
 	    )
-    )
+	)
 } else {
 	if ( n_cls > 0 ){
 		g <- g + geom_point(
