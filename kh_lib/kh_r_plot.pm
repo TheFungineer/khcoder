@@ -1021,65 +1021,59 @@ sub R_device{
 
 
 	# Setup the dpi value
-
-	#my $dpi = 72; (13.3/1509)*1280*25.4
-
-	# width/1920 * height/1080
-
-	#my $dpi = 72 * ($height / 1080); #sqrt($width * $width + $height * $height) / 13.3;
-	my $dpi = sqrt($width * $width + $height * $height) / (1080 / 72);
+	my $dpi = 72;
 	use Statistics::Lite qw(min);
 
-#	if (
-#
-#		(
-#
-#			   $self->{command_f} =~ /ggdendro/
-#
-#			|| $self->{command_f} =~ /rect\.hclust/
-#
-#		)
-#
-#		and not ( $self->{command_f} =~ /pp_type/ )
-#
-#	) {                         # dendrogram
-#
-#		$dpi = int( 72 * ($::config_obj->plot_size_codes / 480) );
-#
-#	}
-#
-#	elsif ($self->{command_f} =~ /# dpi: short based\n/){ # short based (codes, mainly)
-#
-#		$dpi = int( 72 * ( min($width,$height) / 480) );
-#
-#	}
-#
-#	elsif ($height == $width) { # square
-#
-#		$dpi = int( 72 * ($height / 640) ) if $height > 640;
-#
-#	}
-#
-#	elsif (
-#
-#		   $height == $::config_obj->plot_size_codes
-#
-#		&& $width  == $::config_obj->plot_size_words
-#
-#	){                          # default rectangle
-#
-#		$dpi = int( 72 * ($::config_obj->plot_size_words / 640) );
-#
-#	}
-#
-#	elsif ( min($width,$height) > 640 ) { # unknown
-#
-#		$dpi = int( 72 * ( min($width,$height) / 640 ) )
-#
-#	}
-#
-#
-#
+	if (
+
+		(
+
+			   $self->{command_f} =~ /ggdendro/
+
+			|| $self->{command_f} =~ /rect\.hclust/
+
+		)
+
+		and not ( $self->{command_f} =~ /pp_type/ )
+
+	) {                         # dendrogram
+
+		$dpi = int( 72 * ($::config_obj->plot_size_codes / 480) );
+
+	}
+
+	elsif ($self->{command_f} =~ /# dpi: short based\n/){ # short based (codes, mainly)
+
+		$dpi = int( 72 * ( min($width,$height) / 480) );
+
+	}
+
+	elsif ($height == $width) { # square
+
+		$dpi = int( 72 * ($height / 640) ) if $height > 640;
+
+	}
+
+	elsif (
+
+		   $height == $::config_obj->plot_size_codes
+
+		&& $width  == $::config_obj->plot_size_words
+
+	){                          # default rectangle
+
+		$dpi = int( 72 * ($::config_obj->plot_size_words / 640) );
+
+	}
+
+	elsif ( min($width,$height) > 640 ) { # unknown
+
+		$dpi = int( 72 * ( min($width,$height) / 640 ) )
+
+	}
+
+
+
 	$dpi = int( $dpi * $self->{font_size} );
 
 
@@ -1466,61 +1460,60 @@ sub _save_png{
 
 	# Setup the dpi value
 
-	#my $dpi = 72;
-	my $dpi = sqrt($width * $width + $height * $height) / (1080 / 72);
+	my $dpi = 72;
 
 	use Statistics::Lite qw(min);
 
-#	if (
-#
-#		(
-#
-#			   $self->{command_f} =~ /ggdendro/
-#
-#			|| $self->{command_f} =~ /rect\.hclust/
-#
-#		)
-#
-#		and not ( $self->{command_f} =~ /pp_type/ )
-#
-#	) {                         # dendrogram
-#
-#		$dpi = int( 72 * ($::config_obj->plot_size_codes / 480) );
-#
-#	}
-#
-#	elsif ($self->{command_f} =~ /# dpi: short based\n/){ # short based (codes, mainly)
-#
-#		$dpi = int( 72 * ( min($width,$height) / 480) );
-#
-#	}
-#
-#	elsif ($height == $width) { # square
-#
-#		$dpi = int( 72 * ($height / 640) ) if $height > 640;
-#
-#	}
-#
-#	elsif (
-#
-#		   $height == $::config_obj->plot_size_codes
-#
-#		&& $width  == $::config_obj->plot_size_words
-#
-#	){                          # default rectangle
-#
-#		$dpi = int( 72 * ($::config_obj->plot_size_words / 640) );
-#
-#	}
-#
-#	elsif ( min($width,$height) > 640 ) { # unknown
-#
-#		$dpi = int( 72 * ( min($width,$height) / 640 ) )
-#
-#	}
-#
-#
-#
+	if (
+
+		(
+
+			   $self->{command_f} =~ /ggdendro/
+
+			|| $self->{command_f} =~ /rect\.hclust/
+
+		)
+
+		and not ( $self->{command_f} =~ /pp_type/ )
+
+	) {                         # dendrogram
+
+		$dpi = int( 72 * ($::config_obj->plot_size_codes / 480) );
+
+	}
+
+	elsif ($self->{command_f} =~ /# dpi: short based\n/){ # short based (codes, mainly)
+
+		$dpi = int( 72 * ( min($width,$height) / 480) );
+
+	}
+
+	elsif ($height == $width) { # square
+
+		$dpi = int( 72 * ($height / 640) ) if $height > 640;
+
+	}
+
+	elsif (
+
+		   $height == $::config_obj->plot_size_codes
+
+		&& $width  == $::config_obj->plot_size_words
+
+	){                          # default rectangle
+
+		$dpi = int( 72 * ($::config_obj->plot_size_words / 640) );
+
+	}
+
+	elsif ( min($width,$height) > 640 ) { # unknown
+
+		$dpi = int( 72 * ( min($width,$height) / 640 ) )
+
+	}
+
+
+
 	$dpi = int( $dpi * $self->{font_size} );
 
 	$self->{dpi} = $dpi;
