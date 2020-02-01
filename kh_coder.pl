@@ -2,15 +2,15 @@
 
 =head1 COPYRIGHT
 
-Copyright (C) 2001-2013 鐃緒申鐃緒申鐃縮逸申 <http://koichi.nihon.to/psnl>
+Copyright (C) 2001-2013 �����̰� <http://koichi.nihon.to/psnl>
 
-鐃旬プワ申鐃緒申鐃緒申鐃熟フリー鐃緒申鐃緒申鐃春トワ申鐃緒申鐃緒申鐃叔わ申鐃緒申
+�ܥץ������ϥե꡼�����եȥ������Ǥ���
 
-鐃緒申鐃淑わ申鐃熟￥申Free Software Foundation 鐃緒申鐃緒申表鐃緒申鐃緒申GNU鐃緒申鐃縮醐申有鐃緒申鐃術居申鐃緒申鐃緒申鐃�The GNU General Public License鐃祝の「バ￥申鐃緒申鐃緒申鐃�2鐃竣逸申鐃緒申鐃熟わ申鐃緒申聞澆粒謄弌鐃緒申鐃緒申鐃緒申鐃緒申罎�申蕕わ申鐃緒申譴�申鐃緒申鐃緒申鬚掘鐃緒申鐃緒申離弌鐃緒申鐃緒申鐃緒申鐃緒申鐃緒申鐃緒申暴鐃緒申辰鐃緒申椒廛鐃緒申鐃緒申鐃緒申鐃緒申鐃術￥申鐃緒申鐃緒申鐃循￥申鐃殉わ申鐃緒申鐃術刻申鐃緒申鐃暑こ鐃夙わ申鐃叔わ申鐃殉わ申鐃緒申
+���ʤ��ϡ�Free Software Foundation ����ɽ����GNU���̸�ͭ���ѵ������The GNU General Public License�ˤΡ֥С������2�װ����Ϥ���ʹߤγƥС��������椫�餤���줫�����򤷡����ΥС������������˽��ä��ܥץ���������ѡ������ۡ��ޤ����ѹ����뤳�Ȥ��Ǥ��ޤ���
 
-鐃旬プワ申鐃緒申鐃緒申鐃緒申有鐃術とは思わ申鐃殉わ申鐃緒申鐃緒申鐃緒申鐃循わ申鐃緒申鐃緒申鐃獣ては￥申鐃峻常申鐃緒申鐃准わ申鐃緒申鐃緒申鐃緒申的適鐃緒申鐃緒申鐃祝つわ申鐃銃の逸申鐃循わ申鐃楯証わ申泙鐃銃￥申鐃緒申鐃緒申鐃淑わ申鐃楯証わ申圓鐃緒申泙鐃緒申鐃�
+�ܥץ�������ͭ�ѤȤϻפ��ޤ��������ۤ������äƤϡ��Ծ����ڤ�������ŪŬ�����ˤĤ��Ƥΰ��ۤ��ݾڤ�ޤ�ơ������ʤ��ݾڤ�Ԥ��ޤ���
 
-鐃旬細につわ申鐃銃わ申GNU鐃緒申鐃縮醐申有鐃緒申鐃術居申鐃緒申鐃緒申鐃緒申匹濂鐃緒申鐃緒申鐃緒申鐃�GNU鐃緒申鐃縮醐申有鐃緒申鐃術居申鐃緒申鐃緒申鐃緒申椒廛鐃緒申鐃緒申鐃緒申離泪縫絅�申鐃緒申鐃緒申鐃緒申鐃緒申添鐃春わ申鐃緒申討鐃緒申泙鐃緒申鐃緒申鐃緒申襪わ申鐃�<http://www.gnu.org/licenses/>鐃叔も、GNU鐃緒申鐃縮醐申有鐃緒申鐃術居申鐃緒申鐃緒申鐃緒申鐃緒申鐃緒申鐃暑こ鐃夙わ申鐃叔わ申鐃殉わ申鐃緒申
+�ܺ٤ˤĤ��Ƥ�GNU���̸�ͭ���ѵ�������ɤ߲�������GNU���̸�ͭ���ѵ�������ܥץ������Υޥ˥奢���������ź�դ���Ƥ��ޤ������뤤��<http://www.gnu.org/licenses/>�Ǥ⡢GNU���̸�ͭ���ѵ������������뤳�Ȥ��Ǥ��ޤ���
 
 =cut
 
@@ -23,7 +23,7 @@ use vars qw($config_obj $project_obj $main_gui $splash $kh_version);
 $kh_version = "3.Alpha.10b";
 
 BEGIN {
-	# 鐃叔バッワ申鐃術￥申
+	# �ǥХå��ѡ�
 	#open (STDERR,">stderr.txt") or die;
 
 	use Jcode;
@@ -47,7 +47,7 @@ BEGIN {
 	# for Windows [1]
 	use Cwd;
 	if ($^O eq 'MSWin32'){
-		# Cwd.pm鐃塾常申鐃�
+		# Cwd.pm�ξ��
 		no warnings 'redefine';
 		sub Cwd::_win32_cwd {
 			if (defined &DynaLoader::boot_DynaLoader) {
@@ -65,12 +65,12 @@ BEGIN {
 		use warnings 'redefine';
 	}
 
-	# 鐃盾ジ鐃遵ー鐃緒申離僖鐃緒申鐃緒申媛鐃�
+	# �⥸�塼��Υѥ����ɲ�
 	unshift @INC, cwd.'/kh_lib';
 
 	# for Windows [2]
 	if ($^O eq 'MSWin32'){
-		# 鐃緒申鐃藷ソ￥申鐃緒申鐃叔常申鐃緒申
+		# ���󥽡����Ǿ���
 		require Win32::Console;
 		Win32::Console->new->Title('Console of KH Coder');
 		Win32::Sleep(50);
@@ -82,7 +82,7 @@ BEGIN {
 			$ShowWindow->Call( $hw, 7 );
 		}
 		$SIG{TERM} = $SIG{QUIT} = sub{ exit; };
-		# 鐃緒申鐃竣ワ申奪鐃緒申鐃�
+		# ���ץ�å���
 		#require Tk::Splash;
 		#$splash = Tk::Splash->Show(
 		#	Tk->findINC('kh_logo.bmp'),
@@ -90,15 +90,15 @@ BEGIN {
 		#	109,
 		#	'',
 		#);
-		# Tk鐃緒申Invoke鐃緒申鐃淑わ申鐃殉ワ申鐃緒申鐃緒申鐃獣ワ申鐃術のワ申鐃竣ワ申奪鐃緒申鐃�
+		# Tk��Invoke���ʤ��ޥ������å��ѤΥ��ץ�å���
 		if (eval 'require Win32::GUI::SplashScreen'){
-			require Tk::Splash; # findINC鐃舜随申鐃緒申鐃緒申鐃暑た鐃緒申
+			require Tk::Splash; # findINC�ؿ������뤿��
 			Win32::GUI::SplashScreen::Show(
 				-file => Tk->findINC('kh_logo.bmp'),
 				-mintime => 3,
 			);
 		}
-		# 鐃緒申鐃緒申
+		# ����
 		require Tk::Clipboard;
 		require Tk::Clipboard_kh;
 	} 
@@ -115,7 +115,7 @@ BEGIN {
 		}
 	}
 
-	# 鐃緒申鐃緒申鐃緒申匹濆鐃緒申鐃�
+	# ������ɤ߹���
 	require kh_sysconfig;
 	$config_obj = kh_sysconfig->readin('./config/coder.ini',&cwd);
 }
@@ -134,7 +134,7 @@ print "\nKH Coder version $kh_version, Copyright (C) 2001-2020 Koichi Higuchi\nF
 print "This is KH Coder $kh_version running on $^O.\n";
 print "CWD: ", $config_obj->cwd, "\n";
 
-# Windows鐃叔パッワ申鐃緒申鐃緒申鐃術の緒申鐃緒申鐃�
+# Windows�ǥѥå������Ѥν����
 if (
 	   ($::config_obj->os eq 'win32')
 	&& $::config_obj->all_in_one_pack
@@ -143,7 +143,7 @@ if (
 	kh_all_in_one->init;
 }
 
-# Mac OS X鐃叔パッワ申鐃緒申鐃緒申鐃術の緒申鐃緒申鐃�
+# Mac OS X�ǥѥå������Ѥν����
 if (
 	   ($^O eq 'darwin')
 	&& $::config_obj->all_in_one_pack
@@ -152,7 +152,7 @@ if (
 	kh_all_in_mac->init;
 }
 
-# R鐃塾緒申鐃緒申鐃�
+# R�ν����
 use Statistics::R;
 
 no  warnings 'redefine';
@@ -193,17 +193,17 @@ if ($::config_obj->{R}){
 chdir ($::config_obj->{cwd});
 $::config_obj->R_version;
 
-# 鐃殉ワ申鐃緒申鐃緒申鐃獣ド緒申鐃緒申鐃塾緒申鐃緒申
+# �ޥ������åɽ����ν���
 use my_threads;
 my_threads->init;
 
-# GUI鐃塾鰹申鐃緒申
+# GUI�γ���
 $main_gui = gui_window::main->open;
 MainLoop;
 
 __END__
 
-# 鐃銃ワ申鐃緒申鐃術プワ申鐃緒申鐃緒申鐃緒申鐃夙を開わ申
+# �ƥ����ѥץ��������Ȥ򳫤�
 kh_project->temp(
 	target  =>
 		'F:/home/Koichi/Study/perl/test_data/STATS_News-IT-2004/2004p.txt',
@@ -216,11 +216,11 @@ $::main_gui->close_all;
 $::main_gui->menu->refresh;
 $::main_gui->inner->refresh;
 
-# 鐃緒申鐃緒申鐃粛ットワー鐃緒申鐃緒申鐃緒申
+# �����ͥåȥ������
 my $win_net = gui_window::word_netgraph->open;
 $win_net->calc;
 
-# 鐃緒申鐃緒申鐃粛ットワー鐃緒申鐃塾￥申調鐃緒申鐃竣を繰わ申鐃瞬わ申
+# �����ͥåȥ���Ρ�Ĵ���פ򷫤��֤�
 my $n = 0;
 while (1){
 	my $c = $::main_gui->get('w_word_netgraph_plot');
