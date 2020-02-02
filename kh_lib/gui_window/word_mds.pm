@@ -580,14 +580,16 @@ daome.log_base <- 8
 daome.logn <- function(num) {
 	log(num)/log(daome.log_base)
 }
+daome.min_of_min <- 1
+
 neg_to_zero <- function(nums){
   temp <- NULL
   for (i in 1:length(nums) ){
     if ( is.na( nums[i] ) ){
-      temp[i] <- 1
+      temp[i] <- daome.min_of_min
     } else {
-	    if (nums[i] < 1){
-	      temp[i] <- 1
+	    if (nums[i] < daome.min_of_min){
+	      temp[i] <- daome.min_of_min
 	    } else {
 	      temp[i] <-  nums[i]
 	    }
@@ -614,7 +616,8 @@ for (i in rownames(cl)){
 	}
 }
 
-b_dist <- daome.logn(b_freq)
+b_dist <- sqrt(b_freq / pi)
+b_dist <- daome.logn(b_dist)
 
 # Standardize (emphasize) bubble size
 if (std_radius){ 
@@ -624,12 +627,12 @@ if (std_radius){
  		b_dist <- (b_dist - mean(b_dist)) / sd(b_dist)
  		b_dist <- b_dist * 5 * bubble_var / 100 + 10
  	}
-	b_size <- neg_to_zero(b_dist)
+	b_size <- b_dist * 30 / max(b_dist)
+	b_size <- neg_to_zero(b_size)
 }else{
 	lerp_alpha <- (b_dist - min(b_dist))/(max(b_dist)-min(b_dist))
-	b_size <- daome.log_base^lerp(lerp_alpha, daome.logn(1), daome.logn(30))
+	b_size <- daome.log_base^lerp(lerp_alpha, daome.logn(pi), daome.logn(30))
 }
-
 
 # Cluster analysis
 if (n_cls > 0){
