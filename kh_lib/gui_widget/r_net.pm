@@ -34,7 +34,7 @@ sub _new{
 		unless defined $self->{view_coef};
 
 	my ($check_bubble, $chk_std_radius, $num_size, $num_var)
-		= (1,1,100,140);
+		= (1,1,100,100);
 
 	if ( length($self->{r_cmd}) ){
 		my ($edges);
