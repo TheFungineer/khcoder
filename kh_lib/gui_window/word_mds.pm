@@ -783,7 +783,7 @@ if ( bubble == 1 ){
 
 	lerp_freq <- function(brks) {
 		if (std_radius){
-			lbls <- c("Minimum:\n", "Average:\n", "Maximum:\n")
+			lbls <- c("Minimum:\n", "Average (Rounded):\n", "Maximum:\n")
 			lbl_brk <- (c(min(b_dist), brks[2], max(b_dist)) - min(b_dist))/(max(b_dist)-min(b_dist))
 			lbl_brk <- lerp(lbl_brk, min(sqrt(b_freq/pi)), max(sqrt(b_freq/pi)))
 			lbl_brk <- round(lbl_brk * lbl_brk * pi,0)
@@ -818,7 +818,8 @@ if ( bubble == 1 ){
 		guide = guide_legend(
 			title = "Frequency:",
 			override.aes = list(colour="black", alpha=1),
-			label.hjust = 1,
+			label.hjust = 0,
+			label.position = "left",
 			order = 2
 	    )
 	)
