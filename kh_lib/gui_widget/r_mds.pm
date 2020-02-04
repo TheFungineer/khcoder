@@ -20,7 +20,7 @@ sub _new{
 	$self->{cls_if}             = 1        unless defined $self->{cls_if};
 	
 	my ($check_bubble, $chk_std_radius, $num_size, $num_var)
-		= (1,1,120,155);
+		= (1,1,100,100);
 	my $cls_n_d = 3;
 	if (defined $self->{from} && $self->{from} eq 'w_word_mds') {
 		$cls_n_d = 5;
