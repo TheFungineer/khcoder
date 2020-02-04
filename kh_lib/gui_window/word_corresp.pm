@@ -878,6 +878,8 @@ sub make_plot{
 		$r_command .= "font_size <- $fontsize\n";
 		$r_command .= "resize_vars <- $args{resize_vars}\n";
 		$r_command .= "bubble_size <- $args{bubble_size}\n";
+		$r_command .= "std_radius <- $args{std_radius}\n";
+		$r_command .= "bubble_var <- $args{bubble_var}\n";
 		$r_command .= "labcd <- NULL\n\n";
 		my $common = $r_command;
 		
@@ -1050,8 +1052,8 @@ END_OF_the_R_COMMAND
 	v_pch <- c( v_pch, rep(v_count + 2, nrow(cur[[1]]) ) )
 }
 
-d              <- as.matrix( dd )
-doc_length_mtr <- as.matrix( nn )
+d              <- dd
+doc_length_mtr <- nn
 
 END_OF_the_R_COMMAND2
 
@@ -1284,12 +1286,45 @@ if ( (is.null(labcd) && plot_mode != "dots" ) || plot_mode == "vars"){
 #   Words   #
 
 b_size <- NULL
+b_freq <- NULL
 for (i in rownames(c$cscore)){
 	if ( is.na(i) || is.null(i) || is.nan(i) ){
 		b_size <- c( b_size, 1 )
+		b_freq <- c( b_freq, 1 )
 	} else {
 		b_size <- c( b_size, sum( d[,i] ) )
+		b_freq <- c( b_freq, sum( d[,i] ) )
 	}
+}
+
+b_dist <- NULL
+
+neg_to_zero <- function(nums){
+  temp <- NULL
+  for (i in 1:length(nums) ){
+    if ( is.na( nums[i] ) ){
+      temp[i] <- 1
+    } else {
+	    if (nums[i] < 1){
+	      temp[i] <- 1
+	    } else {
+	      temp[i] <-  nums[i]
+	    }
+	}
+  }
+  return(temp)
+}
+
+# Standardize (emphasize) bubble size
+if (std_radius){ 
+	b_dist <- sqrt(b_freq / pi)
+	if ( sd(b_dist) == 0 ){
+ 		b_dist <- rep(10, length(b_dist))
+ 	} else {
+ 		b_dist <- (b_dist - mean(b_dist)) / sd(b_dist)
+ 		b_dist <- b_dist * 5 * bubble_var / 100 + 10
+ 	}
+	b_size <- neg_to_zero(b_dist)
 }
 
 col_bg_words <- NA
@@ -1363,26 +1398,43 @@ lerp <- function(x, a, b) {
 	a * (1 - x) + b * x
 }
 
+nrst_pow10 <- function(x) {
+	floor(log10(x))
+}
+
 lerp_freq <- function(brks) {
-	return(brks)
+	lbls <- c("Minimum:\n", "Average (Rounded):\n", "Maximum:\n")
+	lbl_brk <- brks
+	if (std_radius){
+		lbl_brk <- (c(min(b_dist), brks[2], max(b_dist)) - min(b_dist))/(max(b_dist)-min(b_dist))
+		lbl_brk <- lerp(lbl_brk, min(sqrt(b_freq/pi)), max(sqrt(b_freq/pi)))
+		lbl_brk <- round(lbl_brk * lbl_brk * pi,0)
+	}
+	return(paste0(lbls,lbl_brk))
 }
 
 interp_breaks <- function(extrem) {
-	mid_brk <- lerp(1/2, min(extrem), max(extrem))
-	mid_brk <- round(mid_brk, -1 * floor(log10(mid_brk)))
+	mean_brk <- mean(b_freq)
+	mean_brk <- round(mean_brk, -1 * nrst_pow10(mean_brk))
+	if (std_radius){
+		mean_brk <- sqrt(mean_brk/pi)
+		mean_brk <- (mean_brk - min(sqrt(b_freq/pi)))/(max(sqrt(b_freq/pi))-min(sqrt(b_freq/pi)))
+		mean_brk <- lerp(mean_brk, min(b_dist), max(b_dist))
+	}
 	return(c(  	min(extrem),
-				mid_brk,
+				mean_brk,
 				max(extrem) ))
 }
 
 g <- g + scale_size_area(
-	max_size= 30 * bubble_size / 100,
+	max_size = 30 * bubble_size / 100,
 	breaks = interp_breaks,
 	labels = lerp_freq,
 	guide = guide_legend(
 		title = "Frequency:",
 		override.aes = list(colour="black", fill=NA, alpha=1),
-		label.hjust = 1,
+		label.hjust = 0,
+		label.position = "left",
 		order = 2
 	)
 )
@@ -1403,17 +1455,18 @@ if ( nrow(df.words.sub) > 0 ){
 #   Variables   #
 
 if ( biplot == 1 ){
+	vars_size <- as.numeric(n_total) * max(b_size) / max(n_total) * 0.6
 	df.vars <- data.frame(
 		x    = c$rscore[,d_x],
 		y    = c$rscore[,d_y],
-		size = n_total * max(b_size) / max(n_total) * 0.6,
+		s    = vars_size,
 		type = v_pch
 	)
 
 	if ( resize_vars == 1 ) {
 		g <- g + geom_point(
 			data=df.vars,
-			aes(x=x, y=y, size=size, shape=factor(type) ),
+			aes(x=x, y=y, size=s, shape=factor(type) ),
 			#colour = NA,
 			fill = col_bg_vars,
 			alpha=0.2,
@@ -1422,7 +1475,7 @@ if ( biplot == 1 ){
 
 		g <- g + geom_point(
 			data=df.vars,
-			aes(x=x, y=y, size=size, shape=factor(type) ),
+			aes(x=x, y=y, size=s, shape=factor(type) ),
 			colour = col_dot_vars,
 			fill = NA,
 			alpha=1,
@@ -1577,7 +1630,7 @@ g <- g + theme(
 	axis.title.y = element_text(face="plain", size=11, angle=90),
 	axis.text.x  = element_text(face="plain", size=11, angle=0),
 	axis.text.y  = element_text(face="plain", size=11, angle=0),
-	legend.title = element_text(face="bold",  size=11, angle=0),
+	legend.title = element_text(face="bold",  size=14, angle=0),
 	legend.text  = element_text(face="plain", size=11, angle=0)
 )
 

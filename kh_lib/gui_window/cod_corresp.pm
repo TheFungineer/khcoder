@@ -1042,13 +1042,17 @@ d$name <- NULL
 d       <- d[       order(rownames(d      )), ]
 n_total <- n_total[ order(rownames(n_total))  ]
 #------------------------------------------------------------------------------
+tf <- row.names(d) != "欠損値" & row.names(d) != "." & regexpr("^missing$", row.names(d), ignore.case = T, perl = T) == -1
+
 n_total <- subset(
 	n_total,
-	row.names(d) != "欠損値" & row.names(d) != "." & row.names(d) != "missing"
+	# row.names(d) != "欠損値" & row.names(d) != "." & row.names(d) != "missing"
+	tf
 )
 d <- subset(
 	d,
-	row.names(d) != "欠損値" & row.names(d) != "." & row.names(d) != "missing"
+	# row.names(d) != "欠損値" & row.names(d) != "." & row.names(d) != "missing"
+	tf
 )
 #------------------------------------------------------------------------------
 n_total <- subset(n_total,rowSums(d) > 0)

@@ -1001,43 +1001,23 @@ neg_to_zero <- function(nums){
   return(temp)
 }
 
-# Frequencies Set for Legend
-legend_freq <- NULL
+b_freq <- ver_freq[!is.na(ver_freq)]
+b_size <- ver_freq[!is.na(ver_freq)]
+b_dist <- NULL
 
-for (i in 1:length(igraph::get.vertex.attribute(n2,"name"))){
-	if ( !is.na(ver_freq[i]) && !is.null(ver_freq[i]) && !is.nan(ver_freq[i]) ){
-		legend_freq <- c( legend_freq, ver_freq[i] )
-	}
-}
-
-# Adjust bubble radius so that appearance number ratio = area ratio
-legend_freq <- sqrt( legend_freq / pi)
-ver_freq <- sqrt( ver_freq / pi )
-
-#
 # Standardize (emphasize) bubble size
-#
-# TODO: 
-# So essentially, NAs are set to the frequency of words that were marked as ignored in order to make them invisible in the graph. 
-# But then, when we want to standardize the size of the bubbles that represents the distribution of frequencies, does the amount 
-# of words analyzed is related to your degree-of-freedom? If so we need to be careful in how we substitute the frequencies of 
-# ignored words which then act as missing data resulting in bias in the distribution of frequencies. If the list of ignored words 
-# is fixed and wont change in your whole experimentation then you probably dont care, but you tell me...
-#
-# if ( std_radius == 1 ){ 
-# 	if ( sd(ver_freq, na.rm = TRUE) == 0 ){
-# 		ver_freq <- rep(10, length(ver_freq))
-# 		if ( is.null(target_ids) == FALSE ){
-# 			ver_freq[target_ids] <- NA
-# 		}
-# 	} else {
-# 		ver_freq <- ver_freq / sd(ver_freq, na.rm = TRUE)
-# 		ver_freq <- ver_freq - mean(ver_freq, na.rm = TRUE)
-# 		ver_freq <- (ver_freq * 5 * bubble_var / 100 + 10) * (bubble_size / 100)
-# 		ver_freq <- neg_to_zero(ver_freq)
-# 	}
-# }
-#
+if (std_radius){ 
+	ver_freq <- sqrt(ver_freq / pi)
+	if ( sd(ver_freq[!is.na(ver_freq)]) == 0 ){
+ 		ver_freq[!is.na(ver_freq)] <- rep(10, length(ver_freq[!is.na(ver_freq)]))
+ 	} else {
+ 		ver_freq[!is.na(ver_freq)] <- (ver_freq[!is.na(ver_freq)] - mean(ver_freq[!is.na(ver_freq)])) / sd(ver_freq[!is.na(ver_freq)])
+ 		ver_freq[!is.na(ver_freq)] <- ver_freq[!is.na(ver_freq)] * 5 * bubble_var / 100 + 10
+		b_dist = ver_freq[!is.na(ver_freq)]
+ 	}
+	ver_freq[!is.na(ver_freq)] <- neg_to_zero(ver_freq[!is.na(ver_freq)])
+	b_size <- ver_freq[!is.na(ver_freq)]
+}
 
 n2 <- igraph::set.vertex.attribute(
 	n2,
@@ -1319,15 +1299,27 @@ nrst_pow10 <- function(x) {
 }
 
 lerp_freq <- function(brks) {
-	brks * brks * pi
+	lbls <- c("Minimum:\n", "Average (Rounded):\n", "Maximum:\n")
+	lbl_brk <- brks
+	if (std_radius){
+		lbl_brk <- (c(min(b_dist), brks[2], max(b_dist)) - min(b_dist))/(max(b_dist)-min(b_dist))
+		lbl_brk <- lerp(lbl_brk, min(sqrt(b_freq/pi)), max(sqrt(b_freq/pi)))
+		lbl_brk <- round(lbl_brk * lbl_brk * pi,0)
+	}
+	return(paste0(lbls,lbl_brk))
 }
 
-interp_breaks <- function(ignored_has_na) {
-	extrem_f = c(min(legend_freq), max(legend_freq)) * c(min(legend_freq), max(legend_freq)) * pi
-	sqrt( c(lerp(0/3, min(extrem_f), max(extrem_f)),
-			round(lerp(1/3, min(extrem_f), max(extrem_f)), -1 * nrst_pow10(lerp(1/3, min(extrem_f), max(extrem_f)))),
-			round(lerp(2/3, min(extrem_f), max(extrem_f)), -1 * nrst_pow10(lerp(2/3, min(extrem_f), max(extrem_f)))),
-			lerp(3/3, min(extrem_f), max(extrem_f))) / pi)
+interp_breaks <- function(extrem) {
+	mean_brk <- mean(b_freq)
+	mean_brk <- round(mean_brk, -1 * nrst_pow10(mean_brk))
+	if (std_radius){
+		mean_brk <- sqrt(mean_brk/pi)
+		mean_brk <- (mean_brk - min(sqrt(b_freq/pi)))/(max(sqrt(b_freq/pi))-min(sqrt(b_freq/pi)))
+		mean_brk <- lerp(mean_brk, min(b_dist), max(b_dist))
+	}
+	return(c(  	min(extrem),
+				mean_brk,
+				max(extrem) ))
 }
 
 if ( use_freq_as_size == 1 ){
@@ -1339,7 +1331,8 @@ if ( use_freq_as_size == 1 ){
 		guide = guide_legend(
 			title = "Frequency:",
 			override.aes = list(colour="black", alpha=1, shape=1),
-			label.hjust = 1,
+			label.hjust = 0,
+			label.position = "left",
 			order = 3
 		)
 	)
@@ -1684,7 +1677,7 @@ if ( com_method == "cnt-b" || com_method == "cnt-d" || com_method == "cnt-e"){
 			title = "Centrality:\n",
 			title.theme = element_text(
 				face="bold",
-				size=11,
+				size=14,
 				lineheight=0.4,
 				angle=0
 			),
@@ -1751,7 +1744,7 @@ if (com_method == "cor"){
 }
 
 p <- p + theme(
-	legend.title    = element_text(face="bold",  size=11, angle=0),
+	legend.title    = element_text(face="bold",  size=14, angle=0),
 	legend.text     = element_text(face="plain", size=11, angle=0)
 )
 

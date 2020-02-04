@@ -782,33 +782,26 @@ if ( bubble == 1 ){
 	}
 
 	lerp_freq <- function(brks) {
+		lbls <- c("Minimum:\n", "Average (Rounded):\n", "Maximum:\n")
+		lbl_brk <- brks
 		if (std_radius){
-			lbls <- c("Minimum:\n", "Average (Rounded):\n", "Maximum:\n")
 			lbl_brk <- (c(min(b_dist), brks[2], max(b_dist)) - min(b_dist))/(max(b_dist)-min(b_dist))
 			lbl_brk <- lerp(lbl_brk, min(sqrt(b_freq/pi)), max(sqrt(b_freq/pi)))
 			lbl_brk <- round(lbl_brk * lbl_brk * pi,0)
-			return(paste0(lbls,lbl_brk))
 		}
-		return(brks)
+		return(paste0(lbls,lbl_brk))
 	}
 
 	interp_breaks <- function(extrem) {
+		mean_brk <- mean(b_freq)
+		mean_brk <- round(mean_brk, -1 * nrst_pow10(mean_brk))
 		if (std_radius){
-			mean_brk <- (mean(b_dist) - min(b_dist))/(max(b_dist)-min(b_dist))
-			mean_brk <- lerp(mean_brk, min(sqrt(b_freq/pi)), max(sqrt(b_freq/pi)))
-			mean_brk <- mean_brk * mean_brk * pi
-			mean_brk <- round(mean_brk, -1 * nrst_pow10(mean_brk))
 			mean_brk <- sqrt(mean_brk/pi)
 			mean_brk <- (mean_brk - min(sqrt(b_freq/pi)))/(max(sqrt(b_freq/pi))-min(sqrt(b_freq/pi)))
 			mean_brk <- lerp(mean_brk, min(b_dist), max(b_dist))
-			return(c(  	min(extrem),
-						mean_brk,
-						max(extrem) ))
 		}
-		mid_brk <- lerp(1/2, min(extrem), max(extrem))
-		mid_brk <- round(mid_brk, -1 * nrst_pow10(mid_brk))
 		return(c(  	min(extrem),
-					mid_brk,
+					mean_brk,
 					max(extrem) ))
 	}
 	g <- g + scale_size_area(
@@ -905,7 +898,7 @@ g <- g + theme(
 	axis.title.y = element_text(face="plain", size=11, angle=90),
 	axis.text.x  = element_text(face="plain", size=11, angle=0),
 	axis.text.y  = element_text(face="plain", size=11, angle=0),
-	legend.title = element_text(face="bold",  size=11, angle=0),
+	legend.title = element_text(face="bold",  size=14, angle=0),
 	legend.text  = element_text(face="plain", size=11, angle=0)
 )
 
