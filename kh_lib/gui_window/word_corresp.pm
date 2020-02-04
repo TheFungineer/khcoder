@@ -1019,14 +1019,9 @@ aggregate_with_var <- function(d, doc_length_mtr, v) {
 	d              <- d[              order(rownames(d             )), ]
 	doc_length_mtr <- doc_length_mtr[ order(rownames(doc_length_mtr)), ]
 
-	doc_length_mtr <- subset(
-		doc_length_mtr,
-		row.names(d) != name_nav & row.names(d) != "." & row.names(d) != "missing"
-	)
-	d <- subset(
-		d,
-		row.names(d) != name_nav & row.names(d) != "." & row.names(d) != "missing"
-	)
+	tf <- row.names(d) != name_nav & row.names(d) != "." & regexpr("^missing$", row.names(d), ignore.case = T, perl = T) == -1	
+	doc_length_mtr <- subset(doc_length_mtr, tf)
+	d <- subset(d, tf)
 
 	# doc_length_mtr <- subset(doc_length_mtr, rowSums(d) > 0)
 	# d              <- subset(d,              rowSums(d) > 0)
@@ -1055,8 +1050,8 @@ END_OF_the_R_COMMAND
 	v_pch <- c( v_pch, rep(v_count + 2, nrow(cur[[1]]) ) )
 }
 
-d              <- dd
-doc_length_mtr <- nn
+d              <- as.matrix( dd )
+doc_length_mtr <- as.matrix( nn )
 
 END_OF_the_R_COMMAND2
 
@@ -1079,11 +1074,11 @@ if ( (flw > 0) && (flw < ncol(d)) ){
 	d <- d[,order(sort,decreasing=T)]
 	d <- d[,1:flw]
 	
-	d <- subset(d, rowSums(d) > 0)
 	if (exists("doc_length_mtr")){
 		doc_length_mtr <- subset(doc_length_mtr, rowSums(d) > 0)
 		n_total <- doc_length_mtr[,2]
 	}
+	d <- subset(d, rowSums(d) > 0)
 }
 
 d_max <- min( nrow(d), ncol(d) ) - 1
@@ -1364,8 +1359,26 @@ g <- g + geom_point(
 	show.legend = F
 )
 
+lerp <- function(x, a, b) {
+	a * (1 - x) + b * x
+}
+
+lerp_freq <- function(brks) {
+	return(brks)
+}
+
+interp_breaks <- function(extrem) {
+	mid_brk <- lerp(1/2, min(extrem), max(extrem))
+	mid_brk <- round(mid_brk, -1 * floor(log10(mid_brk)))
+	return(c(  	min(extrem),
+				mid_brk,
+				max(extrem) ))
+}
+
 g <- g + scale_size_area(
 	max_size= 30 * bubble_size / 100,
+	breaks = interp_breaks,
+	labels = lerp_freq,
 	guide = guide_legend(
 		title = "Frequency:",
 		override.aes = list(colour="black", fill=NA, alpha=1),
@@ -1579,9 +1592,12 @@ if (show_origin == 1){
 	ylims <- lim_chk$panel$ranges[[1]]$y.range
 	if ( is.null(xlims) ){
 		xlims <- lim_chk$layout$panel_ranges[[1]]$x.range
-		ylims <- lim_chk$layout$panel_ranges[[1]]$x.range
+		ylims <- lim_chk$layout$panel_ranges[[1]]$y.range
 	}
-	
+	if ( is.null(xlims) ){
+		xlims <- lim_chk$layout$panel_params[[1]]$x.range
+		ylims <- lim_chk$layout$panel_params[[1]]$y.range
+	}	
 	g <- g + scale_x_continuous( limits=xlims, expand=c(0,0) )
 	g <- g + scale_y_continuous( limits=ylims, expand=c(0,0) )
 	

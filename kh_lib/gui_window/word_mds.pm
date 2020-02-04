@@ -576,30 +576,21 @@ if ( exists("bs_fixed") == F ) {
 }
 
 # Determine the size of the bubbles
-daome.log_base <- 8
-daome.logn <- function(num) {
-	log(num)/log(daome.log_base)
-}
-daome.min_of_min <- 1
 
 neg_to_zero <- function(nums){
   temp <- NULL
   for (i in 1:length(nums) ){
     if ( is.na( nums[i] ) ){
-      temp[i] <- daome.min_of_min
+      temp[i] <- 1
     } else {
-	    if (nums[i] < daome.min_of_min){
-	      temp[i] <- daome.min_of_min
+	    if (nums[i] < 1){
+	      temp[i] <- 1
 	    } else {
 	      temp[i] <-  nums[i]
 	    }
 	}
   }
   return(temp)
-}
-
-lerp <- function(x, a, b) {
-	a * (1 - x) + b * x
 }
 
 b_size <- NULL
@@ -781,6 +772,10 @@ if ( bubble == 1 ){
 		colour="gray40",
 		alpha=alpha_value
 	)
+
+	lerp <- function(x, a, b) {
+		a * (1 - x) + b * x
+	}
 	
 	nrst_pow10 <- function(x) {
 		floor(log10(x))
