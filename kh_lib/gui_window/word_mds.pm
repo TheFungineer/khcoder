@@ -616,22 +616,18 @@ for (i in rownames(cl)){
 	}
 }
 
-b_dist <- sqrt(b_freq / pi)
-b_dist <- daome.logn(b_dist)
+
 
 # Standardize (emphasize) bubble size
 if (std_radius){ 
+	b_dist <- sqrt(b_freq / pi)
 	if ( sd(b_dist) == 0 ){
  		b_dist <- rep(10, length(b_dist))
  	} else {
  		b_dist <- (b_dist - mean(b_dist)) / sd(b_dist)
  		b_dist <- b_dist * 5 * bubble_var / 100 + 10
  	}
-	b_size <- b_dist * 30 / max(b_dist)
-	b_size <- neg_to_zero(b_size)
-}else{
-	lerp_alpha <- (b_dist - min(b_dist))/(max(b_dist)-min(b_dist))
-	b_size <- daome.log_base^lerp(lerp_alpha, daome.logn(pi), daome.logn(30))
+	b_size <- neg_to_zero(b_dist)
 }
 
 # Cluster analysis
@@ -792,34 +788,32 @@ if ( bubble == 1 ){
 
 	lerp_freq <- function(brks) {
 		if (std_radius){
-			temp <- (brks - min(b_dist))/(max(b_dist) - min(b_dist))
-			temp <- lerp(temp, min(daome.logn(b_freq)), max(daome.logn(b_freq)))
-			temp <- round(daome.log_base^temp, 0)
-			return(temp)
+			lbls <- c("Minimum:\n", "Average:\n", "Maximum:\n")
+			lbl_brk <- (c(min(b_dist), brks[2], max(b_dist)) - min(b_dist))/(max(b_dist)-min(b_dist))
+			lbl_brk <- lerp(lbl_brk, min(sqrt(b_freq/pi)), max(sqrt(b_freq/pi)))
+			lbl_brk <- round(lbl_brk * lbl_brk * pi,0)
+			return(paste0(lbls,lbl_brk))
 		}
-		log_brks <- daome.logn(brks)
-		brk_alpha <- (log_brks - min(log_brks))/(max(log_brks)-min(log_brks))
-		return(round(daome.log_base^lerp(brk_alpha, min(b_dist), max(b_dist)), 0))
+		return(brks)
 	}
 
 	interp_breaks <- function(extrem) {
 		if (std_radius){
-			mean_lerp_alpha <- (mean(b_dist) - min(b_dist))/(max(b_dist) - min(b_dist))
-			mean_log_freq <- lerp(mean_lerp_alpha, min(daome.logn(b_freq)), max(daome.logn(b_freq)))
-			mean_freq <- daome.log_base^mean_log_freq
-			mean_freq <- round(mean_freq, -1 * nrst_pow10(mean_freq))
-			mean_log_freq <- daome.logn(mean_freq)
-			mean_lerp_alpha <- (mean_log_freq - min(daome.logn(b_freq)))/(max(daome.logn(b_freq)) - min(daome.logn(b_freq)))
+			mean_brk <- (mean(b_dist) - min(b_dist))/(max(b_dist)-min(b_dist))
+			mean_brk <- lerp(mean_brk, min(sqrt(b_freq/pi)), max(sqrt(b_freq/pi)))
+			mean_brk <- mean_brk * mean_brk * pi
+			mean_brk <- round(mean_brk, -1 * nrst_pow10(mean_brk))
+			mean_brk <- sqrt(mean_brk/pi)
+			mean_brk <- (mean_brk - min(sqrt(b_freq/pi)))/(max(sqrt(b_freq/pi))-min(sqrt(b_freq/pi)))
+			mean_brk <- lerp(mean_brk, min(b_dist), max(b_dist))
 			return(c(  	min(extrem),
-						lerp(mean_lerp_alpha, min(b_dist), max(b_dist)),
+						mean_brk,
 						max(extrem) ))
 		}
-		mid_freq <- daome.log_base^mean(b_dist)
-		mid_freq <- round(mid_freq, -1 * nrst_pow10(mid_freq))
-		mid_freq <- daome.logn(mid_freq)
-		mid_lerp_alpha <- (mid_freq - min(b_dist))/(max(b_dist)-min(b_dist))
+		mid_brk <- lerp(1/2, min(extrem), max(extrem))
+		mid_brk <- round(mid_brk, -1 * nrst_pow10(mid_brk))
 		return(c(  	min(extrem),
-					daome.log_base^lerp(mid_lerp_alpha, min(daome.logn(extrem)), max(daome.logn(extrem))),
+					mid_brk,
 					max(extrem) ))
 	}
 	g <- g + scale_size_area(
